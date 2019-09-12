@@ -1299,7 +1299,7 @@ Window_Command.prototype.constructor = Window_Command;
 Window_Command.prototype.initialize = function(x, y) {
     this.clearCommandList();
     this.makeCommandList();
-    var width = 150;this.windowWidth();
+    var width = 190;this.windowWidth();
     var height = this.windowHeight();
     Window_Selectable.prototype.initialize.call(this, x, y, width, height);
     this.refresh();
@@ -5367,7 +5367,7 @@ Window_ActorCommand.prototype = Object.create(Window_Command.prototype);
 Window_ActorCommand.prototype.constructor = Window_ActorCommand;
 
 Window_ActorCommand.prototype.initialize = function() {
-    var y = 583;Graphics.boxHeight - this.windowHeight();
+    var y = 683;Graphics.boxHeight - this.windowHeight();
     Window_Command.prototype.initialize.call(this, 0, y);
     this.openness = 0;
     this.deactivate();
@@ -5375,7 +5375,7 @@ Window_ActorCommand.prototype.initialize = function() {
 };
 
 Window_ActorCommand.prototype.windowWidth = function() {
-    return 192;
+    return 250;192;
 };
 
 Window_ActorCommand.prototype.numVisibleRows = function() {
