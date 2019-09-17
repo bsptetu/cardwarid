@@ -39,5 +39,5 @@ var $plugins =
 {"name":"DTextPicture","status":true,"description":"動的文字列ピクチャ生成プラグイン","parameters":{}},
 {"name":"ServerTime","status":true,"description":"サーバータイムを取得します。","parameters":{}},
 {"name":"Oggy_CustomLoading","status":true,"description":"v1.00 This plugin customizes a loading ui","parameters":{}},
-{"name":"OnlineAvatar","status":true,"description":"Firebaseを使ってプレイヤーをオンライン同期します。","parameters":{"apiKey":"AIzaSyA7HZZTNNtZgkvoj_TFoQARqtFrMJ_9t_4","authDomain":"cardwarld.firebaseapp.com","databaseURL":"https://cardwarld.firebaseio.com","avatarEvent":"0","syncSwitchStart":"0","syncSwitchEnd":"0","syncVariableStart":"4002","syncVariableEnd":"4100"}}
+{"name":"OnlineAvatar","status":true,"description":"Firebaseを使ってプレイヤーをオンライン同期します。","parameters":{"apiKey":"AIzaSyA7HZZTNNtZgkvoj_TFoQARqtFrMJ_9t_4","authDomain":"cardwarld.firebaseapp.com","databaseURL":"https://cardwarld.firebaseio.com","avatarEvent":"0","syncSwitchStart":"0","syncSwitchEnd":"0","syncVariableStart":"4002","syncVariableEnd":"4223"}}
 ];
