@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_scenes.js v1.6.2
+// rpg_scenes.js v1.6.1
 //=============================================================================
 
 //=============================================================================
@@ -447,6 +447,7 @@ Scene_Title.prototype.start = function() {
     this.centerSprite(this._backSprite2);
     this.playTitleMusic();
     this.startFadeIn(this.fadeSpeed(), false);
+$gameScreen.showPicture(3,"ansatu",1,150,220,100,100,255,0)
 };
 
 Scene_Title.prototype.update = function() {
@@ -2245,6 +2246,7 @@ Scene_Battle.prototype.start = function() {
     this.startFadeIn(this.fadeSpeed(), false);
     BattleManager.playBattleBgm();
     BattleManager.startBattle();
+BattleManager._statusWindow.visible = false;
 };
 
 Scene_Battle.prototype.update = function() {

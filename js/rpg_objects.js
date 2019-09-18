@@ -1,5 +1,5 @@
-//=============================================================================
-// rpg_objects.js v1.6.2
+﻿//=============================================================================
+// rpg_objects.js v1.6.1
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -1652,17 +1652,28 @@ Game_Action.prototype.apply = function(target) {
     result.evaded = (!result.missed && Math.random() < this.itemEva(target));
     result.physical = this.isPhysical();
     result.drain = this.isDrain();
+$gameSwitches.setValue(76,false)
     if (result.isHit()) {
         if (this.item().damage.type > 0) {
             result.critical = (Math.random() < this.itemCri(target));
             var value = this.makeDamageValue(target, result.critical);
             this.executeDamage(target, value);
         }
-        this.item().effects.forEach(function(effect) {
-            this.applyItemEffect(target, effect);
-        }, this);
+       this.item().effects.forEach(function(effect) {
+     if (target.result().hpDamage > 0) {
+     if (this.item().damage.type === 1) {
+     if (!result.missed) {
+       $gameSwitches.setValue(76,true)
+       this.applyItemEffect(target, effect);
         this.applyItemUserEffect(target);
     }
+    }
+    }
+    }, this);
+     if (this.item().damage.type === 0) {
+        this.applyItemUserEffect(target);
+        }
+        }
 };
 
 Game_Action.prototype.makeDamageValue = function(target, critical) {
@@ -1721,7 +1732,7 @@ Game_Action.prototype.elementsMaxRate = function(target, elements) {
 };
 
 Game_Action.prototype.applyCritical = function(damage) {
-    return damage * 3;
+    return damage * 2;
 };
 
 Game_Action.prototype.applyVariance = function(damage, variance) {
@@ -1741,6 +1752,11 @@ Game_Action.prototype.executeDamage = function(target, value) {
     }
     if (this.isHpEffect()) {
         this.executeHpDamage(target, value);
+     if (target.result().hpDamage === 0) {
+if (this.item().damage.type === 1) {
+            target.startAnimation(53);
+    }
+    }
     }
     if (this.isMpEffect()) {
         this.executeMpDamage(target, value);
@@ -2659,7 +2675,7 @@ Game_BattlerBase.prototype.isAlive = function() {
 };
 
 Game_BattlerBase.prototype.isDying = function() {
-    return this.isAlive() && this._hp < this.mhp / 4;
+    return this.isAlive() && this._hp < this.mhp / 3;
 };
 
 Game_BattlerBase.prototype.isRestricted = function() {
@@ -3000,6 +3016,7 @@ Game_Battler.prototype.refresh = function() {
     Game_BattlerBase.prototype.refresh.call(this);
     if (this.hp === 0) {
         this.addState(this.deathStateId());
+        $gameTemp.reserveCommonEvent(19);
     } else {
         this.removeState(this.deathStateId());
     }
@@ -4003,6 +4020,7 @@ Game_Actor.prototype.startAnimation = function(animationId, mirror, delay) {
 
 Game_Actor.prototype.performActionStart = function(action) {
     Game_Battler.prototype.performActionStart.call(this, action);
+    this.requestEffect('whiten');
 };
 
 Game_Actor.prototype.performAction = function(action) {
@@ -4103,6 +4121,7 @@ Game_Actor.prototype.makeAutoBattleActions = function() {
         var maxValue = Number.MIN_VALUE;
         for (var j = 0; j < list.length; j++) {
             var value = list[j].evaluate();
+            value += (value == 0 && list[j].isAttack()) ? Math.random() / 10 : 0;
             if (value > maxValue) {
                 maxValue = value;
                 this.setAction(i, list[j]);
@@ -4804,7 +4823,7 @@ Game_Party.prototype.battleMembers = function() {
 };
 
 Game_Party.prototype.maxBattleMembers = function() {
-    return 4;
+    return 8;
 };
 
 Game_Party.prototype.leader = function() {

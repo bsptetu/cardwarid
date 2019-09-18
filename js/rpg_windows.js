@@ -1,5 +1,5 @@
-//=============================================================================
-// rpg_windows.js v1.6.2
+﻿//=============================================================================
+// rpg_windows.js v1.6.1
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ Window_Base._faceWidth  = 144;
 Window_Base._faceHeight = 144;
 
 Window_Base.prototype.lineHeight = function() {
-    return 36;
+    return 60;
 };
 
 Window_Base.prototype.standardFontFace = function() {
@@ -47,7 +47,7 @@ Window_Base.prototype.standardFontFace = function() {
 };
 
 Window_Base.prototype.standardFontSize = function() {
-    return 28;
+    return 42;
 };
 
 Window_Base.prototype.standardPadding = function() {
@@ -116,7 +116,7 @@ Window_Base.prototype.update = function() {
 
 Window_Base.prototype.updateOpen = function() {
     if (this._opening) {
-        this.openness += 32;
+        this.openness += 96;
         if (this.isOpen()) {
             this._opening = false;
         }
@@ -125,7 +125,7 @@ Window_Base.prototype.updateOpen = function() {
 
 Window_Base.prototype.updateClose = function() {
     if (this._closing) {
-        this.openness -= 32;
+        this.openness -= 96;
         if (this.isClosed()) {
             this._closing = false;
         }
@@ -1299,7 +1299,7 @@ Window_Command.prototype.constructor = Window_Command;
 Window_Command.prototype.initialize = function(x, y) {
     this.clearCommandList();
     this.makeCommandList();
-    var width = this.windowWidth();
+    var width = 190;this.windowWidth();
     var height = this.windowHeight();
     Window_Selectable.prototype.initialize.call(this, x, y, width, height);
     this.refresh();
@@ -4251,6 +4251,8 @@ Window_Message.prototype.initialize = function() {
     this.initMembers();
     this.createSubWindows();
     this.updatePlacement();
+this.contents.outlineWidth = 1;
+this.contents.outlineColor = 'black';
 };
 
 Window_Message.prototype.initMembers = function() {
@@ -4292,7 +4294,7 @@ Window_Message.prototype.clearFlags = function() {
 };
 
 Window_Message.prototype.numVisibleRows = function() {
-    return 4;
+    return 3;
 };
 
 Window_Message.prototype.update = function() {
@@ -4783,7 +4785,7 @@ Window_BattleLog.prototype.numLines = function() {
 };
 
 Window_BattleLog.prototype.messageSpeed = function() {
-    return 16;
+    return 0;
 };
 
 Window_BattleLog.prototype.isBusy = function() {
@@ -5324,7 +5326,7 @@ Window_PartyCommand.prototype = Object.create(Window_Command.prototype);
 Window_PartyCommand.prototype.constructor = Window_PartyCommand;
 
 Window_PartyCommand.prototype.initialize = function() {
-    var y = Graphics.boxHeight - this.windowHeight();
+    var y = 583;Graphics.boxHeight - this.windowHeight();
     Window_Command.prototype.initialize.call(this, 0, y);
     this.openness = 0;
     this.deactivate();
@@ -5365,7 +5367,7 @@ Window_ActorCommand.prototype = Object.create(Window_Command.prototype);
 Window_ActorCommand.prototype.constructor = Window_ActorCommand;
 
 Window_ActorCommand.prototype.initialize = function() {
-    var y = Graphics.boxHeight - this.windowHeight();
+    var y = 683;Graphics.boxHeight - this.windowHeight();
     Window_Command.prototype.initialize.call(this, 0, y);
     this.openness = 0;
     this.deactivate();
@@ -5373,7 +5375,7 @@ Window_ActorCommand.prototype.initialize = function() {
 };
 
 Window_ActorCommand.prototype.windowWidth = function() {
-    return 192;
+    return 250;192;
 };
 
 Window_ActorCommand.prototype.numVisibleRows = function() {
@@ -5462,7 +5464,7 @@ Window_BattleStatus.prototype.constructor = Window_BattleStatus;
 Window_BattleStatus.prototype.initialize = function() {
     var width = this.windowWidth();
     var height = this.windowHeight();
-    var x = Graphics.boxWidth - width;
+    var x = 1400;Graphics.boxWidth - width;
     var y = Graphics.boxHeight - height;
     Window_Selectable.prototype.initialize.call(this, x, y, width, height);
     this.refresh();
@@ -5795,8 +5797,8 @@ Window_GameEnd.prototype.windowWidth = function() {
 };
 
 Window_GameEnd.prototype.updatePlacement = function() {
-    this.x = (Graphics.boxWidth - this.width) / 2;
-    this.y = (Graphics.boxHeight - this.height) / 2;
+    this.x = 800;(Graphics.boxWidth - this.width) / 2;
+    this.y = 800;(Graphics.boxHeight - this.height) / 2;
 };
 
 Window_GameEnd.prototype.makeCommandList = function() {
