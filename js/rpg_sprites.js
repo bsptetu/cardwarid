@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_sprites.js v1.6.1 (community-1.3b)
+// rpg_sprites.js v1.6.1
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -725,11 +725,11 @@ Sprite_Actor.prototype.setBattler = function(battler) {
 };
 
 Sprite_Actor.prototype.moveToStartPosition = function() {
-    this.startMove(300, 0, 0);
+    this.startMove(0, 0, 0);
 };
 
 Sprite_Actor.prototype.setActorHome = function(index) {
-    this.setHome(600 + index * 32, 280 + index * 48);
+    this.setHome(900 + index * 32, 280 + index * 48);
 };
 
 Sprite_Actor.prototype.update = function() {
@@ -765,6 +765,10 @@ Sprite_Actor.prototype.setupWeaponAnimation = function() {
     }
 };
 
+Sprite_Actor.prototype.startWhiten = function() {
+    this._effectDuration = 20;
+};
+
 Sprite_Actor.prototype.startMotion = function(motionType) {
     var newMotion = Sprite_Actor.MOTIONS[motionType];
     if (this._motion !== newMotion) {
@@ -774,15 +778,6 @@ Sprite_Actor.prototype.startMotion = function(motionType) {
     }
 };
 
-Sprite_Actor.prototype.updateTargetPosition = function() {
-    if (this._actor.isInputting() || this._actor.isActing()) {
-        this.stepForward();
-    } else if (this._actor.canMove() && BattleManager.isEscaped()) {
-        this.retreat();
-    } else if (!this.inHomePosition()) {
-        this.stepBack();
-    }
-};
 
 Sprite_Actor.prototype.updateBitmap = function() {
     Sprite_Battler.prototype.updateBitmap.call(this);
@@ -901,7 +896,7 @@ Sprite_Actor.prototype.onMoveEnd = function() {
 };
 
 Sprite_Actor.prototype.damageOffsetX = function() {
-    return -32;
+    return 0;
 };
 
 Sprite_Actor.prototype.damageOffsetY = function() {
@@ -991,7 +986,7 @@ Sprite_Enemy.prototype.updatePosition = function() {
 };
 
 Sprite_Enemy.prototype.updateStateSprite = function() {
-    this._stateIconSprite.y = -Math.round((this.bitmap.height + 40) * 0.9);
+    this._stateIconSprite.y = -Math.round((this.bitmap.height + 40) * 0.65);
     if (this._stateIconSprite.y < 20 - this.y) {
         this._stateIconSprite.y = 20 - this.y;
     }
@@ -1055,7 +1050,7 @@ Sprite_Enemy.prototype.startDisappear = function() {
 };
 
 Sprite_Enemy.prototype.startWhiten = function() {
-    this._effectDuration = 16;
+    this._effectDuration = 1;
 };
 
 Sprite_Enemy.prototype.startBlink = function() {
@@ -1621,8 +1616,8 @@ Sprite_StateIcon.prototype.initMembers = function() {
     this._iconIndex = 0;
     this._animationCount = 0;
     this._animationIndex = 0;
-    this.anchor.x = 0.5;
-    this.anchor.y = 0.5;
+    this.anchor.x = 0.5;1.9;
+    this.anchor.y = 0.7;
 };
 
 Sprite_StateIcon.prototype.loadBitmap = function() {
@@ -1668,7 +1663,7 @@ Sprite_StateIcon.prototype.updateIcon = function() {
 Sprite_StateIcon.prototype.updateFrame = function() {
     var pw = Sprite_StateIcon._iconWidth;
     var ph = Sprite_StateIcon._iconHeight;
-    var sx = this._iconIndex % 16 * pw;
+    var sx = this._iconIndex % 16 * pw ;
     var sy = Math.floor(this._iconIndex / 16) * ph;
     this.setFrame(sx, sy, pw, ph);
 };
@@ -1696,8 +1691,8 @@ Sprite_StateOverlay.prototype.initMembers = function() {
     this._overlayIndex = 0;
     this._animationCount = 0;
     this._pattern = 0;
-    this.anchor.x = 0.5;
-    this.anchor.y = 1;
+    this.anchor.x = 0;
+    this.anchor.y = 1.4;
 };
 
 Sprite_StateOverlay.prototype.loadBitmap = function() {
@@ -2170,7 +2165,6 @@ Spriteset_Base.prototype.createWebGLToneChanger = function() {
     var width = Graphics.width + margin * 2;
     var height = Graphics.height + margin * 2;
     this._toneFilter = new ToneFilter();
-    this._toneFilter.enabled = false;
     this._baseSprite.filters = [this._toneFilter];
     this._baseSprite.filterArea = new Rectangle(-margin, -margin, width, height);
 };
@@ -2227,13 +2221,8 @@ Spriteset_Base.prototype.updateToneChanger = function() {
 Spriteset_Base.prototype.updateWebGLToneChanger = function() {
     var tone = this._tone;
     this._toneFilter.reset();
-    if (tone[0] || tone[1] || tone[2] || tone[3]) {
-        this._toneFilter.enabled = true;
-        this._toneFilter.adjustTone(tone[0], tone[1], tone[2]);
-        this._toneFilter.adjustSaturation(-tone[3]);
-    } else {
-        this._toneFilter.enabled = false;
-    }
+    this._toneFilter.adjustTone(tone[0], tone[1], tone[2]);
+    this._toneFilter.adjustSaturation(-tone[3]);
 };
 
 Spriteset_Base.prototype.updateCanvasToneChanger = function() {
