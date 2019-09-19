@@ -1,5 +1,5 @@
-﻿//=============================================================================
-// rpg_objects.js v1.6.1
+//=============================================================================
+// rpg_objects.js v1.6.1 (community-1.3b)
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -36,6 +36,10 @@ Game_Temp.prototype.isCommonEventReserved = function() {
 
 Game_Temp.prototype.reservedCommonEvent = function() {
     return $dataCommonEvents[this._commonEventId];
+};
+
+Game_Temp.prototype.reservedCommonEventId = function() {
+    return this._commonEventId;
 };
 
 Game_Temp.prototype.setDestination = function(x, y) {
@@ -80,6 +84,7 @@ Game_System.prototype.initialize = function() {
     this._saveCount = 0;
     this._versionId = 0;
     this._framesOnSave = 0;
+    this._sceneFramesOnSave = 0;
     this._bgmOnSave = null;
     this._bgsOnSave = null;
     this._windowTone = null;
@@ -230,18 +235,20 @@ Game_System.prototype.onBeforeSave = function() {
     this._saveCount++;
     this._versionId = $dataSystem.versionId;
     this._framesOnSave = Graphics.frameCount;
+    this._sceneFramesOnSave = SceneManager.frameCount();
     this._bgmOnSave = AudioManager.saveBgm();
     this._bgsOnSave = AudioManager.saveBgs();
 };
 
 Game_System.prototype.onAfterLoad = function() {
     Graphics.frameCount = this._framesOnSave;
+    SceneManager.setFrameCount(this._sceneFramesOnSave || this._framesOnSave);
     AudioManager.playBgm(this._bgmOnSave);
     AudioManager.playBgs(this._bgsOnSave);
 };
 
 Game_System.prototype.playtime = function() {
-    return Math.floor(Graphics.frameCount / 60);
+    return Math.floor(SceneManager.frameCount() / 60);
 };
 
 Game_System.prototype.playtimeText = function() {
@@ -1652,28 +1659,17 @@ Game_Action.prototype.apply = function(target) {
     result.evaded = (!result.missed && Math.random() < this.itemEva(target));
     result.physical = this.isPhysical();
     result.drain = this.isDrain();
-$gameSwitches.setValue(76,false)
     if (result.isHit()) {
         if (this.item().damage.type > 0) {
             result.critical = (Math.random() < this.itemCri(target));
             var value = this.makeDamageValue(target, result.critical);
             this.executeDamage(target, value);
         }
-       this.item().effects.forEach(function(effect) {
-     if (target.result().hpDamage > 0) {
-     if (this.item().damage.type === 1) {
-     if (!result.missed) {
-       $gameSwitches.setValue(76,true)
-       this.applyItemEffect(target, effect);
+        this.item().effects.forEach(function(effect) {
+            this.applyItemEffect(target, effect);
+        }, this);
         this.applyItemUserEffect(target);
     }
-    }
-    }
-    }, this);
-     if (this.item().damage.type === 0) {
-        this.applyItemUserEffect(target);
-        }
-        }
 };
 
 Game_Action.prototype.makeDamageValue = function(target, critical) {
@@ -1732,7 +1728,7 @@ Game_Action.prototype.elementsMaxRate = function(target, elements) {
 };
 
 Game_Action.prototype.applyCritical = function(damage) {
-    return damage * 2;
+    return damage * 3;
 };
 
 Game_Action.prototype.applyVariance = function(damage, variance) {
@@ -1752,11 +1748,6 @@ Game_Action.prototype.executeDamage = function(target, value) {
     }
     if (this.isHpEffect()) {
         this.executeHpDamage(target, value);
-     if (target.result().hpDamage === 0) {
-if (this.item().damage.type === 1) {
-            target.startAnimation(53);
-    }
-    }
     }
     if (this.isMpEffect()) {
         this.executeMpDamage(target, value);
@@ -2675,7 +2666,7 @@ Game_BattlerBase.prototype.isAlive = function() {
 };
 
 Game_BattlerBase.prototype.isDying = function() {
-    return this.isAlive() && this._hp < this.mhp / 3;
+    return this.isAlive() && this._hp < this.mhp / 4;
 };
 
 Game_BattlerBase.prototype.isRestricted = function() {
@@ -3016,7 +3007,6 @@ Game_Battler.prototype.refresh = function() {
     Game_BattlerBase.prototype.refresh.call(this);
     if (this.hp === 0) {
         this.addState(this.deathStateId());
-        $gameTemp.reserveCommonEvent(19);
     } else {
         this.removeState(this.deathStateId());
     }
@@ -4020,7 +4010,6 @@ Game_Actor.prototype.startAnimation = function(animationId, mirror, delay) {
 
 Game_Actor.prototype.performActionStart = function(action) {
     Game_Battler.prototype.performActionStart.call(this, action);
-    this.requestEffect('whiten');
 };
 
 Game_Actor.prototype.performAction = function(action) {
@@ -4121,7 +4110,6 @@ Game_Actor.prototype.makeAutoBattleActions = function() {
         var maxValue = Number.MIN_VALUE;
         for (var j = 0; j < list.length; j++) {
             var value = list[j].evaluate();
-            value += (value == 0 && list[j].isAttack()) ? Math.random() / 10 : 0;
             if (value > maxValue) {
                 maxValue = value;
                 this.setAction(i, list[j]);
@@ -4823,7 +4811,7 @@ Game_Party.prototype.battleMembers = function() {
 };
 
 Game_Party.prototype.maxBattleMembers = function() {
-    return 8;
+    return 4;
 };
 
 Game_Party.prototype.leader = function() {
@@ -5371,6 +5359,7 @@ Game_Troop.prototype.setupBattleEvent = function() {
             var page = pages[i];
             if (this.meetsConditions(page) && !this._eventFlags[i]) {
                 this._interpreter.setup(page.list);
+                this._interpreter.setEventInfo({ eventType: 'battle_event', troopId: this._troopId, page: i + 1 });
                 if (page.span <= 1) {
                     this._eventFlags[i] = true;
                 }
@@ -6171,6 +6160,7 @@ Game_Map.prototype.setupStartingEvent = function() {
 Game_Map.prototype.setupTestEvent = function() {
     if ($testEvent) {
         this._interpreter.setup($testEvent, 0);
+        this._interpreter.setEventInfo({ eventType: 'test_event' });
         $testEvent = null;
         return true;
     }
@@ -6184,6 +6174,7 @@ Game_Map.prototype.setupStartingMapEvent = function() {
         if (event.isStarting()) {
             event.clearStartingFlag();
             this._interpreter.setup(event.list(), event.eventId());
+            this._interpreter.setEventInfo(event.getEventInfo());
             return true;
         }
     }
@@ -6195,6 +6186,7 @@ Game_Map.prototype.setupAutorunCommonEvent = function() {
         var event = $dataCommonEvents[i];
         if (event && event.trigger === 1 && $gameSwitches.value(event.switchId)) {
             this._interpreter.setup(event.list);
+            this._interpreter.setEventInfo({ eventType: 'common_event', commonEventId: i });
             return true;
         }
     }
@@ -6249,6 +6241,7 @@ Game_CommonEvent.prototype.update = function() {
     if (this._interpreter) {
         if (!this._interpreter.isRunning()) {
             this._interpreter.setup(this.list());
+            this._interpreter.setEventInfo({ eventType: 'common_event', commonEventId: this._commonEventId });
         }
         this._interpreter.update();
     }
@@ -6916,6 +6909,7 @@ Game_Character.prototype.initMembers = function() {
     this._originalMoveRoute = null;
     this._originalMoveRouteIndex = 0;
     this._waitCount = 0;
+    this._callerEventInfo = null;
 };
 
 Game_Character.prototype.memorizeMoveRoute = function() {
@@ -6927,6 +6921,7 @@ Game_Character.prototype.restoreMoveRoute = function() {
     this._moveRoute          = this._originalMoveRoute;
     this._moveRouteIndex     = this._originalMoveRouteIndex;
     this._originalMoveRoute  = null;
+    this._callerEventInfo    = null;
 };
 
 Game_Character.prototype.isMoveRouteForcing = function() {
@@ -6947,6 +6942,10 @@ Game_Character.prototype.forceMoveRoute = function(moveRoute) {
     this._moveRouteIndex = 0;
     this._moveRouteForcing = true;
     this._waitCount = 0;
+};
+
+Game_Character.prototype.setCallerEventInfo = function(callerEventInfo) {
+    this._callerEventInfo = callerEventInfo;
 };
 
 Game_Character.prototype.updateStop = function() {
@@ -7109,7 +7108,27 @@ Game_Character.prototype.processMoveCommand = function(command) {
         AudioManager.playSe(params[0]);
         break;
     case gc.ROUTE_SCRIPT:
-        eval(params[0]);
+        try {
+            eval(params[0]);
+        } catch (error) {
+            if (this._callerEventInfo) {
+                for (var key in this._callerEventInfo) {
+                    error[key] = this._callerEventInfo[key];
+                }
+                error.line += this._moveRouteIndex + 1;
+                error.eventCommand = "set_route_script";
+                error.content = command.parameters[0];
+            } else {
+                error.eventType = "map_event";
+                error.mapId = this._mapId;
+                error.mapEventId = this._eventId;
+                error.page = this._pageIndex + 1;
+                error.line = this._moveRouteIndex + 1;
+                error.eventCommand = "auto_route_script";
+                error.content = command.parameters[0];
+            }
+            throw error;
+        }
         break;
     }
 };
@@ -7501,6 +7520,7 @@ Game_Player.prototype.performTransfer = function() {
         }
         this.locate(this._newX, this._newY);
         this.refresh();
+        DataManager.autoSaveGame();
         this.clearTransferInfo();
     }
 };
@@ -8763,6 +8783,7 @@ Game_Event.prototype.updateParallel = function() {
     if (this._interpreter) {
         if (!this._interpreter.isRunning()) {
             this._interpreter.setup(this.list(), this._eventId);
+            this._interpreter.setEventInfo(this.getEventInfo());
         }
         this._interpreter.update();
     }
@@ -8776,6 +8797,10 @@ Game_Event.prototype.locate = function(x, y) {
 Game_Event.prototype.forceMoveRoute = function(moveRoute) {
     Game_Character.prototype.forceMoveRoute.call(this, moveRoute);
     this._prelockDirection = 0;
+};
+
+Game_Event.prototype.getEventInfo = function() {
+    return { eventType: "map_event", mapId: this._mapId, mapEventId: this._eventId, page: this._pageIndex + 1 };
 };
 
 //-----------------------------------------------------------------------------
@@ -8812,6 +8837,7 @@ Game_Interpreter.prototype.clear = function() {
     this._waitCount = 0;
     this._waitMode = '';
     this._comments = '';
+    this._eventInfo = null;
     this._character = null;
     this._childInterpreter = null;
 };
@@ -8832,9 +8858,14 @@ Game_Interpreter.prototype.isOnCurrentMap = function() {
     return this._mapId === $gameMap.mapId();
 };
 
+Game_Interpreter.prototype.setEventInfo = function(eventInfo) {
+    this._eventInfo = eventInfo;
+};
+
 Game_Interpreter.prototype.setupReservedCommonEvent = function() {
     if ($gameTemp.isCommonEventReserved()) {
         this.setup($gameTemp.reservedCommonEvent().list);
+        this.setEventInfo({ eventType: 'common_event', commonEventId: $gameTemp.reservedCommonEventId() });
         $gameTemp.clearCommonEvent();
         return true;
     } else {
@@ -8946,8 +8977,17 @@ Game_Interpreter.prototype.executeCommand = function() {
         this._indent = command.indent;
         var methodName = 'command' + command.code;
         if (typeof this[methodName] === 'function') {
-            if (!this[methodName]()) {
-                return false;
+            try {
+                if (!this[methodName]()) {
+                    return false;
+                }
+            } catch (error) {
+                for (var key in this._eventInfo) {
+                    error[key] = this._eventInfo[key];
+                }
+                error.eventCommand = error.eventCommand || "other";
+                error.line = error.line || this._index + 1;
+                throw error;
             }
         }
         this._index++;
@@ -9323,7 +9363,13 @@ Game_Interpreter.prototype.command111 = function() {
             result = Input.isPressed(this._params[1]);
             break;
         case 12:  // Script
-            result = !!eval(this._params[1]);
+            try {
+                result = !!eval(this._params[1]);
+            } catch (error) {
+                error.eventCommand = "conditional_branch_script";
+                error.content = this._params[1];
+                throw error;
+            }
             break;
         case 13:  // Vehicle
             result = ($gamePlayer.vehicle() === $gameMap.vehicle(this._params[1]));
@@ -9396,6 +9442,7 @@ Game_Interpreter.prototype.command117 = function() {
 Game_Interpreter.prototype.setupChild = function(list, eventId) {
     this._childInterpreter = new Game_Interpreter(this._depth + 1);
     this._childInterpreter.setup(list, eventId);
+    this._childInterpreter.setEventInfo({ eventType: 'common_event', commonEventId: this._params[0] });
 };
 
 // Label
@@ -9460,7 +9507,13 @@ Game_Interpreter.prototype.command122 = function() {
             value = this.gameDataOperand(this._params[4], this._params[5], this._params[6]);
             break;
         case 4: // Script
-            value = eval(this._params[4]);
+            try {
+                value = eval(this._params[4]);
+            } catch (error) {
+                error.eventCommand = "control_variables";
+                error.content = this._params[4];
+                throw error;
+            }
             break;
     }
     for (var i = this._params[0]; i <= this._params[1]; i++) {
@@ -9804,6 +9857,9 @@ Game_Interpreter.prototype.command205 = function() {
     this._character = this.character(this._params[0]);
     if (this._character) {
         this._character.forceMoveRoute(this._params[1]);
+        var eventInfo = JsonEx.makeDeepCopy(this._eventInfo);
+        eventInfo.line = this._index + 1;
+        this._character.setCallerEventInfo(eventInfo);
         if (this._params[1].wait) {
             this.setWaitMode('route');
         }
@@ -10511,12 +10567,21 @@ Game_Interpreter.prototype.command354 = function() {
 
 // Script
 Game_Interpreter.prototype.command355 = function() {
+    var startLine = this._index + 1;
     var script = this.currentCommand().parameters[0] + '\n';
     while (this.nextEventCode() === 655) {
         this._index++;
         script += this.currentCommand().parameters[0] + '\n';
     }
-    eval(script);
+    var endLine = this._index + 1;
+    try {
+        eval(script);
+    } catch (error) {
+        error.line = startLine + "-" + endLine;
+        error.eventCommand = "script";
+        error.content = script;
+        throw error;
+    }
     return true;
 };
 
@@ -10524,7 +10589,13 @@ Game_Interpreter.prototype.command355 = function() {
 Game_Interpreter.prototype.command356 = function() {
     var args = this._params[0].split(" ");
     var command = args.shift();
-    this.pluginCommand(command, args);
+    try {
+        this.pluginCommand(command, args);
+    } catch (error) {
+        error.eventCommand = "plugin_command";
+        error.content = this._params[0];
+        throw error;
+    }
     return true;
 };
 
@@ -10532,129 +10603,149 @@ Game_Interpreter.prototype.pluginCommand = function(command, args) {
     // to be overridden by plugins
 };
 
-Game_Interpreter.requestImages = function(list, commonList){
-    if(!list) return;
+Game_Interpreter.requestImagesByPluginCommand = function(command,args){
+};
 
-    list.forEach(function(command){
-        var params = command.parameters;
-        switch(command.code){
-            // Show Text
-            case 101:
-                ImageManager.requestFace(params[0]);
-                break;
+Game_Interpreter.requestImagesForCommand = function(command){
+    var params = command.parameters;
+    switch(command.code){
+        // Show Text
+        case 101:
+            ImageManager.requestFace(params[0]);
+            break;
 
-            // Common Event
-            case 117:
-                var commonEvent = $dataCommonEvents[params[0]];
-                if (commonEvent) {
-                    if (!commonList) {
-                        commonList = [];
+        // Change Party Member
+        case 129:
+            var actor = $gameActors.actor(params[0]);
+            if (actor && params[1] === 0) {
+                var name = actor.characterName();
+                ImageManager.requestCharacter(name);
+            }
+            break;
+
+        // Set Movement Route
+        case 205:
+            if(params[1]){
+                params[1].list.forEach(function(command){
+                    var params = command.parameters;
+                    if(command.code === Game_Character.ROUTE_CHANGE_IMAGE){
+                        ImageManager.requestCharacter(params[0]);
                     }
-                    if (!commonList.contains(params[0])) {
-                        commonList.push(params[0]);
-                        Game_Interpreter.requestImages(commonEvent.list, commonList);
-                    }
-                }
-                break;
-
-            // Change Party Member
-            case 129:
-                var actor = $gameActors.actor(params[0]);
-                if (actor && params[1] === 0) {
-                    var name = actor.characterName();
-                    ImageManager.requestCharacter(name);
-                }
-                break;
-
-            // Set Movement Route
-            case 205:
-                if(params[1]){
-                    params[1].list.forEach(function(command){
-                        var params = command.parameters;
-                        if(command.code === Game_Character.ROUTE_CHANGE_IMAGE){
-                            ImageManager.requestCharacter(params[0]);
-                        }
-                    });
-                }
-                break;
-
-            // Show Animation, Show Battle Animation
-            case 212: case 337:
-                if(params[1]) {
-                    var animation = $dataAnimations[params[1]];
-                    var name1 = animation.animation1Name;
-                    var name2 = animation.animation2Name;
-                    var hue1 = animation.animation1Hue;
-                    var hue2 = animation.animation2Hue;
-                    ImageManager.requestAnimation(name1, hue1);
-                    ImageManager.requestAnimation(name2, hue2);
-                }
-                break;
-
-            // Change Player Followers
-            case 216:
-                if (params[0] === 0) {
-                    $gamePlayer.followers().forEach(function(follower) {
-                        var name = follower.characterName();
-                        ImageManager.requestCharacter(name);
-                    });
-                }
-                break;
-
-            // Show Picture
-            case 231:
-                ImageManager.requestPicture(params[1]);
-                break;
-
-            // Change Tileset
-            case 282:
-                var tileset = $dataTilesets[params[0]];
-                tileset.tilesetNames.forEach(function(tilesetName){
-                    ImageManager.requestTileset(tilesetName);
                 });
-                break;
+            }
+            break;
 
-            // Change Battle Back
-            case 283:
-                if ($gameParty.inBattle()) {
-                    ImageManager.requestBattleback1(params[0]);
-                    ImageManager.requestBattleback2(params[1]);
-                }
-                break;
+        // Show Animation, Show Battle Animation
+        case 212: case 337:
+            if(params[1]) {
+                var animation = $dataAnimations[params[1]];
+                var name1 = animation.animation1Name;
+                var name2 = animation.animation2Name;
+                var hue1 = animation.animation1Hue;
+                var hue2 = animation.animation2Hue;
+                ImageManager.requestAnimation(name1, hue1);
+                ImageManager.requestAnimation(name2, hue2);
+            }
+            break;
 
-            // Change Parallax
-            case 284:
-                if (!$gameParty.inBattle()) {
-                    ImageManager.requestParallax(params[0]);
-                }
-                break;
+        // Change Player Followers
+        case 216:
+            if (params[0] === 0) {
+                $gamePlayer.followers().forEach(function(follower) {
+                    var name = follower.characterName();
+                    ImageManager.requestCharacter(name);
+                });
+            }
+            break;
 
-            // Change Actor Images
-            case 322:
+        // Show Picture
+        case 231:
+            ImageManager.requestPicture(params[1]);
+            break;
+
+        // Change Tileset
+        case 282:
+            var tileset = $dataTilesets[params[0]];
+            tileset.tilesetNames.forEach(function(tilesetName){
+                ImageManager.requestTileset(tilesetName);
+            });
+            break;
+
+        // Change Battle Back
+        case 283:
+            if ($gameParty.inBattle()) {
+                ImageManager.requestBattleback1(params[0]);
+                ImageManager.requestBattleback2(params[1]);
+            }
+            break;
+
+        // Change Parallax
+        case 284:
+            if (!$gameParty.inBattle()) {
+                ImageManager.requestParallax(params[0]);
+            }
+            break;
+
+        // Change Actor Images
+        case 322:
+            ImageManager.requestCharacter(params[1]);
+            ImageManager.requestFace(params[3]);
+            ImageManager.requestSvActor(params[5]);
+            break;
+
+        // Change Vehicle Image
+        case 323:
+            var vehicle = $gameMap.vehicle(params[0]);
+            if(vehicle){
                 ImageManager.requestCharacter(params[1]);
-                ImageManager.requestFace(params[3]);
-                ImageManager.requestSvActor(params[5]);
-                break;
+            }
+            break;
 
-            // Change Vehicle Image
-            case 323:
-                var vehicle = $gameMap.vehicle(params[0]);
-                if(vehicle){
-                    ImageManager.requestCharacter(params[1]);
-                }
-                break;
+        // Enemy Transform
+        case 336:
+            var enemy = $dataEnemies[params[1]];
+            var name = enemy.battlerName;
+            var hue = enemy.battlerHue;
+            if ($gameSystem.isSideView()) {
+                ImageManager.requestSvEnemy(name, hue);
+            } else {
+                ImageManager.requestEnemy(name, hue);
+            }
+            break;
+        // Plugin Command
+        case 356:
+            var args = params[0].split(" ");
+            var commandName = args.shift();
+            Game_Interpreter.requestImagesByPluginCommand(commandName,args);
+        break;
+            
+    }
+};
 
-            // Enemy Transform
-            case 336:
-                var enemy = $dataEnemies[params[1]];
-                var name = enemy.battlerName;
-                var hue = enemy.battlerHue;
-                if ($gameSystem.isSideView()) {
-                    ImageManager.requestSvEnemy(name, hue);
-                } else {
-                    ImageManager.requestEnemy(name, hue);
-                }
-                break;
+Game_Interpreter.requestImagesByChildEvent = function(command,commonList){
+    var params =command.parameters;
+    var commonEvent = $dataCommonEvents[params[0]];
+    if (commonEvent) {
+        if (!commonList) {
+            commonList = [];
         }
-    });
+        if (!commonList.contains(params[0])) {
+            commonList.push(params[0]);
+            Game_Interpreter.requestImages(commonEvent.list, commonList);
+        }
+    }
+};
+
+Game_Interpreter.requestImages = function(list, commonList){
+    if(!list){return;}
+    var len = list.length;
+    for(var i=0; i<len; i+=1 ){
+        var command = list[i];
+        // Common Event
+        if(command.code ===117){
+            Game_Interpreter.requestImagesByChildEvent(command,commonList);
+        }else{
+            Game_Interpreter.requestImagesForCommand(command);            
+        }
+    }
 };
