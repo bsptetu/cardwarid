@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// rpg_windows.js v1.6.1 (community-1.3b)
+// rpg_windows.js v1.6.1
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ Window_Base.prototype.update = function() {
 
 Window_Base.prototype.updateOpen = function() {
     if (this._opening) {
-        this.openness += 32;
+        this.openness += 96;
         if (this.isOpen()) {
             this._opening = false;
         }
@@ -125,7 +125,7 @@ Window_Base.prototype.updateOpen = function() {
 
 Window_Base.prototype.updateClose = function() {
     if (this._closing) {
-        this.openness -= 32;
+        this.openness -= 96;
         if (this.isClosed()) {
             this._closing = false;
         }
@@ -456,7 +456,7 @@ Window_Base.prototype.drawCharacter = function(characterName, characterIndex, x,
     var big = ImageManager.isBigCharacter(characterName);
     var pw = bitmap.width / (big ? 3 : 12);
     var ph = bitmap.height / (big ? 4 : 8);
-    var n = big ? 0: characterIndex;
+    var n = characterIndex;
     var sx = (n % 4 * 3 + 1) * pw;
     var sy = (Math.floor(n / 4) * 4) * ph;
     this.contents.blt(bitmap, sx, sy, pw, ph, x - pw / 2, y - ph);
@@ -1299,7 +1299,7 @@ Window_Command.prototype.constructor = Window_Command;
 Window_Command.prototype.initialize = function(x, y) {
     this.clearCommandList();
     this.makeCommandList();
-    var width = this.windowWidth();
+    var width = 190;this.windowWidth();
     var height = this.windowHeight();
     Window_Selectable.prototype.initialize.call(this, x, y, width, height);
     this.refresh();
@@ -2689,7 +2689,7 @@ Window_Options.prototype.drawItem = function(index) {
     this.resetTextColor();
     this.changePaintOpacity(this.isCommandEnabled(index));
     this.drawText(this.commandName(index), rect.x, rect.y, titleWidth, 'left');
-    this.drawText(this.statusText(index), rect.x+titleWidth, rect.y, statusWidth, 'right');
+    this.drawText(this.statusText(index), titleWidth, rect.y, statusWidth, 'right');
 };
 
 Window_Options.prototype.statusWidth = function() {
@@ -2834,14 +2834,7 @@ Window_SavefileList.prototype.drawItem = function(index) {
 };
 
 Window_SavefileList.prototype.drawFileId = function(id, x, y) {
-    if (DataManager.isAutoSaveFileId(id)) {
-        if (this._mode === 'save') {
-            this.changePaintOpacity(false);
-        }
-        this.drawText(TextManager.file + ' ' + id + '(Auto)', x, y, 180);
-    } else {
-        this.drawText(TextManager.file + ' ' + id, x, y, 180);
-    }
+    this.drawText(TextManager.file + ' ' + id, x, y, 180);
 };
 
 Window_SavefileList.prototype.drawContents = function(info, rect, valid) {
@@ -4258,6 +4251,8 @@ Window_Message.prototype.initialize = function() {
     this.initMembers();
     this.createSubWindows();
     this.updatePlacement();
+this.contents.outlineWidth = 1;
+this.contents.outlineColor = 'black';
 };
 
 Window_Message.prototype.initMembers = function() {
@@ -4296,12 +4291,10 @@ Window_Message.prototype.clearFlags = function() {
     this._showFast = false;
     this._lineShowFast = false;
     this._pauseSkip = false;
-    this._textSpeed = 0;
-    this._textSpeedCount = 0;
 };
 
 Window_Message.prototype.numVisibleRows = function() {
-    return 4;
+    return 3;
 };
 
 Window_Message.prototype.update = function() {
@@ -4417,13 +4410,8 @@ Window_Message.prototype.updateMessage = function() {
                 this.newPage(this._textState);
             }
             this.updateShowFast();
-            if (!this._showFast && !this._lineShowFast && this._textSpeedCount < this._textSpeed) {
-                this._textSpeedCount++;
-                break;
-            }
-            this._textSpeedCount = 0;
             this.processCharacter(this._textState);
-            if (!this._showFast && !this._lineShowFast && this._textSpeed !== -1) {
+            if (!this._showFast && !this._lineShowFast) {
                 break;
             }
             if (this.pause || this._waitCount > 0) {
@@ -4558,9 +4546,6 @@ Window_Message.prototype.processEscapeCharacter = function(code, textState) {
         break;
     case '^':
         this._pauseSkip = true;
-        break;
-    case 'S':
-        this._textSpeed = this.obtainEscapeParam(textState) - 1;
         break;
     default:
         Window_Base.prototype.processEscapeCharacter.call(this, code, textState);
@@ -4800,7 +4785,7 @@ Window_BattleLog.prototype.numLines = function() {
 };
 
 Window_BattleLog.prototype.messageSpeed = function() {
-    return 16;
+    return 0;
 };
 
 Window_BattleLog.prototype.isBusy = function() {
@@ -5341,7 +5326,7 @@ Window_PartyCommand.prototype = Object.create(Window_Command.prototype);
 Window_PartyCommand.prototype.constructor = Window_PartyCommand;
 
 Window_PartyCommand.prototype.initialize = function() {
-    var y = Graphics.boxHeight - this.windowHeight();
+    var y = 583;Graphics.boxHeight - this.windowHeight();
     Window_Command.prototype.initialize.call(this, 0, y);
     this.openness = 0;
     this.deactivate();
@@ -5390,7 +5375,7 @@ Window_ActorCommand.prototype.initialize = function() {
 };
 
 Window_ActorCommand.prototype.windowWidth = function() {
-    return 210;192;
+    return 250;192;
 };
 
 Window_ActorCommand.prototype.numVisibleRows = function() {
@@ -5479,8 +5464,8 @@ Window_BattleStatus.prototype.constructor = Window_BattleStatus;
 Window_BattleStatus.prototype.initialize = function() {
     var width = this.windowWidth();
     var height = this.windowHeight();
-    var x = Graphics.boxWidth - width;
-    var y = 1400;Graphics.boxHeight - height;
+    var x = 1400;Graphics.boxWidth - width;
+    var y = Graphics.boxHeight - height;
     Window_Selectable.prototype.initialize.call(this, x, y, width, height);
     this.refresh();
     this.openness = 0;
@@ -5812,8 +5797,8 @@ Window_GameEnd.prototype.windowWidth = function() {
 };
 
 Window_GameEnd.prototype.updatePlacement = function() {
-    this.x = (Graphics.boxWidth - this.width) / 2;
-    this.y = (Graphics.boxHeight - this.height) / 2;
+    this.x = 800;(Graphics.boxWidth - this.width) / 2;
+    this.y = 800;(Graphics.boxHeight - this.height) / 2;
 };
 
 Window_GameEnd.prototype.makeCommandList = function() {
