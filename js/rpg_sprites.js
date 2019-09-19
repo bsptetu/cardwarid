@@ -901,7 +901,7 @@ Sprite_Actor.prototype.onMoveEnd = function() {
 };
 
 Sprite_Actor.prototype.damageOffsetX = function() {
-    return -32;
+    return 0;
 };
 
 Sprite_Actor.prototype.damageOffsetY = function() {
@@ -1055,7 +1055,7 @@ Sprite_Enemy.prototype.startDisappear = function() {
 };
 
 Sprite_Enemy.prototype.startWhiten = function() {
-    this._effectDuration = 16;
+    this._effectDuration = 1;
 };
 
 Sprite_Enemy.prototype.startBlink = function() {
