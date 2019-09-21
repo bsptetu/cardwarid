@@ -725,11 +725,11 @@ Sprite_Actor.prototype.setBattler = function(battler) {
 };
 
 Sprite_Actor.prototype.moveToStartPosition = function() {
-    this.startMove(300, 0, 0);
+    this.startMove(0, 0, 0);
 };
 
 Sprite_Actor.prototype.setActorHome = function(index) {
-    this.setHome(600 + index * 32, 280 + index * 48);
+    this.setHome(800 + index * 32, 900 + index * 48);
 };
 
 Sprite_Actor.prototype.update = function() {
@@ -882,7 +882,7 @@ Sprite_Actor.prototype.startEntryMotion = function() {
 };
 
 Sprite_Actor.prototype.stepForward = function() {
-    this.startMove(-48, 0, 12);
+    this.startMove(0, 0, 12);
 };
 
 Sprite_Actor.prototype.stepBack = function() {
@@ -890,7 +890,7 @@ Sprite_Actor.prototype.stepBack = function() {
 };
 
 Sprite_Actor.prototype.retreat = function() {
-    this.startMove(300, 0, 30);
+    this.startMove(0, 0, 3);
 };
 
 Sprite_Actor.prototype.onMoveEnd = function() {
@@ -991,7 +991,7 @@ Sprite_Enemy.prototype.updatePosition = function() {
 };
 
 Sprite_Enemy.prototype.updateStateSprite = function() {
-    this._stateIconSprite.y = -Math.round((this.bitmap.height + 40) * 0.9);
+    this._stateIconSprite.y = -Math.round((this.bitmap.height + 40) * 0.65);
     if (this._stateIconSprite.y < 20 - this.y) {
         this._stateIconSprite.y = 20 - this.y;
     }
@@ -1622,7 +1622,7 @@ Sprite_StateIcon.prototype.initMembers = function() {
     this._animationCount = 0;
     this._animationIndex = 0;
     this.anchor.x = 0.5;
-    this.anchor.y = 0.5;
+    this.anchor.y = 0.7;
 };
 
 Sprite_StateIcon.prototype.loadBitmap = function() {
@@ -1696,8 +1696,8 @@ Sprite_StateOverlay.prototype.initMembers = function() {
     this._overlayIndex = 0;
     this._animationCount = 0;
     this._pattern = 0;
-    this.anchor.x = 0.5;
-    this.anchor.y = 1;
+    this.anchor.x = 0;
+    this.anchor.y = 1.4;
 };
 
 Sprite_StateOverlay.prototype.loadBitmap = function() {

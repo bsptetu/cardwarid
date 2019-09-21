@@ -90,8 +90,8 @@ $gameTroop.set(4, 430, 371, 1)
 $gameTroop.set(5, 324, 250, 1)
 $gameTroop.set(6, 162, 250, 1)
 $gameTroop.set(7, 471, 250, 1)
- $gameTroop.set(8, 70, 610, 1)
- $gameParty.set(8, 845, 610, 0)
+ $gameTroop.set(8, 270, 840, 1)
+ $gameParty.set(8, 270, 840, 0)
 };
  
 //独自改変用メソッド2（戦闘中、ウインドウが開いてる時と戦闘終了時以外 常に実行）
