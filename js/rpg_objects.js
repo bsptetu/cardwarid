@@ -1,4 +1,4 @@
-﻿//=============================================================================
+//=============================================================================
 // rpg_objects.js v1.6.1 (community-1.3b)
 //=============================================================================
 
@@ -1659,28 +1659,17 @@ Game_Action.prototype.apply = function(target) {
     result.evaded = (!result.missed && Math.random() < this.itemEva(target));
     result.physical = this.isPhysical();
     result.drain = this.isDrain();
-$gameSwitches.setValue(76,false)
     if (result.isHit()) {
         if (this.item().damage.type > 0) {
             result.critical = (Math.random() < this.itemCri(target));
             var value = this.makeDamageValue(target, result.critical);
             this.executeDamage(target, value);
         }
-       this.item().effects.forEach(function(effect) {
-     if (target.result().hpDamage > 0) {
-     if (this.item().damage.type === 1) {
-     if (!result.missed) {
-       $gameSwitches.setValue(76,true)
-       this.applyItemEffect(target, effect);
+        this.item().effects.forEach(function(effect) {
+            this.applyItemEffect(target, effect);
+        }, this);
         this.applyItemUserEffect(target);
     }
-    }
-    }
-    }, this);
-     if (this.item().damage.type === 0) {
-        this.applyItemUserEffect(target);
-        }
-        }
 };
 
 Game_Action.prototype.makeDamageValue = function(target, critical) {
@@ -1739,7 +1728,7 @@ Game_Action.prototype.elementsMaxRate = function(target, elements) {
 };
 
 Game_Action.prototype.applyCritical = function(damage) {
-    return damage * 2;
+    return damage * 3;
 };
 
 Game_Action.prototype.applyVariance = function(damage, variance) {
@@ -1759,11 +1748,6 @@ Game_Action.prototype.executeDamage = function(target, value) {
     }
     if (this.isHpEffect()) {
         this.executeHpDamage(target, value);
-     if (target.result().hpDamage === 0) {
-if (this.item().damage.type === 1) {
-            target.startAnimation(53);
-    }
-    }
     }
     if (this.isMpEffect()) {
         this.executeMpDamage(target, value);
@@ -3023,12 +3007,10 @@ Game_Battler.prototype.refresh = function() {
     Game_BattlerBase.prototype.refresh.call(this);
     if (this.hp === 0) {
         this.addState(this.deathStateId());
-        $gameTemp.reserveCommonEvent(19);
     } else {
         this.removeState(this.deathStateId());
     }
 };
-
 
 Game_Battler.prototype.addState = function(stateId) {
     if (this.isStateAddable(stateId)) {
@@ -4829,7 +4811,7 @@ Game_Party.prototype.battleMembers = function() {
 };
 
 Game_Party.prototype.maxBattleMembers = function() {
-    return 8;
+    return 4;
 };
 
 Game_Party.prototype.leader = function() {
