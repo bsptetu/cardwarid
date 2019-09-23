@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_sprites.js v1.6.1
+// rpg_sprites.js v1.6.1 (community-1.3b)
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -729,7 +729,7 @@ Sprite_Actor.prototype.moveToStartPosition = function() {
 };
 
 Sprite_Actor.prototype.setActorHome = function(index) {
-    this.setHome(900 + index * 32, 280 + index * 48);
+    this.setHome(800 + index * 32, 900 + index * 48);
 };
 
 Sprite_Actor.prototype.update = function() {
@@ -765,10 +765,6 @@ Sprite_Actor.prototype.setupWeaponAnimation = function() {
     }
 };
 
-Sprite_Actor.prototype.startWhiten = function() {
-    this._effectDuration = 20;
-};
-
 Sprite_Actor.prototype.startMotion = function(motionType) {
     var newMotion = Sprite_Actor.MOTIONS[motionType];
     if (this._motion !== newMotion) {
@@ -778,6 +774,15 @@ Sprite_Actor.prototype.startMotion = function(motionType) {
     }
 };
 
+Sprite_Actor.prototype.updateTargetPosition = function() {
+    if (this._actor.isInputting() || this._actor.isActing()) {
+        this.stepForward();
+    } else if (this._actor.canMove() && BattleManager.isEscaped()) {
+        this.retreat();
+    } else if (!this.inHomePosition()) {
+        this.stepBack();
+    }
+};
 
 Sprite_Actor.prototype.updateBitmap = function() {
     Sprite_Battler.prototype.updateBitmap.call(this);
@@ -877,7 +882,7 @@ Sprite_Actor.prototype.startEntryMotion = function() {
 };
 
 Sprite_Actor.prototype.stepForward = function() {
-    this.startMove(-48, 0, 12);
+    this.startMove(0, 0, 12);
 };
 
 Sprite_Actor.prototype.stepBack = function() {
@@ -885,7 +890,7 @@ Sprite_Actor.prototype.stepBack = function() {
 };
 
 Sprite_Actor.prototype.retreat = function() {
-    this.startMove(300, 0, 30);
+    this.startMove(0, 0, 3);
 };
 
 Sprite_Actor.prototype.onMoveEnd = function() {
@@ -1616,7 +1621,7 @@ Sprite_StateIcon.prototype.initMembers = function() {
     this._iconIndex = 0;
     this._animationCount = 0;
     this._animationIndex = 0;
-    this.anchor.x = 0.5;1.9;
+    this.anchor.x = 0.5;
     this.anchor.y = 0.7;
 };
 
@@ -1663,7 +1668,7 @@ Sprite_StateIcon.prototype.updateIcon = function() {
 Sprite_StateIcon.prototype.updateFrame = function() {
     var pw = Sprite_StateIcon._iconWidth;
     var ph = Sprite_StateIcon._iconHeight;
-    var sx = this._iconIndex % 16 * pw ;
+    var sx = this._iconIndex % 16 * pw;
     var sy = Math.floor(this._iconIndex / 16) * ph;
     this.setFrame(sx, sy, pw, ph);
 };
@@ -2165,6 +2170,7 @@ Spriteset_Base.prototype.createWebGLToneChanger = function() {
     var width = Graphics.width + margin * 2;
     var height = Graphics.height + margin * 2;
     this._toneFilter = new ToneFilter();
+    this._toneFilter.enabled = false;
     this._baseSprite.filters = [this._toneFilter];
     this._baseSprite.filterArea = new Rectangle(-margin, -margin, width, height);
 };
@@ -2221,8 +2227,13 @@ Spriteset_Base.prototype.updateToneChanger = function() {
 Spriteset_Base.prototype.updateWebGLToneChanger = function() {
     var tone = this._tone;
     this._toneFilter.reset();
-    this._toneFilter.adjustTone(tone[0], tone[1], tone[2]);
-    this._toneFilter.adjustSaturation(-tone[3]);
+    if (tone[0] || tone[1] || tone[2] || tone[3]) {
+        this._toneFilter.enabled = true;
+        this._toneFilter.adjustTone(tone[0], tone[1], tone[2]);
+        this._toneFilter.adjustSaturation(-tone[3]);
+    } else {
+        this._toneFilter.enabled = false;
+    }
 };
 
 Spriteset_Base.prototype.updateCanvasToneChanger = function() {
