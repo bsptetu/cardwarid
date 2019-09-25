@@ -6,3 +6,28 @@ $gameVariables.setValue(3829,value);
 };
 
  })();
+
+
+Window_BattleLog.prototype.animationBaseDelay = function() {
+    return 1;
+};
+
+Window_BattleLog.prototype.animationNextDelay = function() {
+    return 1;
+};
+
+Window_BattleLog.prototype.updateWaitCount = function() {
+	var waitMax;
+	var waitMin;
+   	    waitMax = 3 * 100;
+    	waitMin = 1 * 100;
+
+    if (this._waitCount > 0) {
+        this._waitCount -= this.isFastForward() ? waitMax : waitMin;
+        if (this._waitCount < 0) {
+            this._waitCount = 0;
+        }
+    	return true;
+    }
+    return false;
+};
