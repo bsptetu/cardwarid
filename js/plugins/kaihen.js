@@ -31,3 +31,9 @@ Window_BattleLog.prototype.updateWaitCount = function() {
     }
     return false;
 };
+
+Window_BattleLog.prototype.addText = function(text) {
+    this._lines.push(text);
+    this.refresh();
+    //this.wait();
+};
