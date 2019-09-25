@@ -2548,8 +2548,8 @@ BattleManager.endTurn = function() {
     this.allBattleMembers().forEach(function(battler) {
         battler.onTurnEnd();
         this.refreshStatus();
-        this._logWindow.displayAutoAffectedStatus(battler);
-        this._logWindow.displayRegeneration(battler);
+        //this._logWindow.displayAutoAffectedStatus(battler);
+        //this._logWindow.displayRegeneration(battler);
     }, this);
     if (this.isForcedTurn()) {
         this._turnForced = false;
