@@ -46,3 +46,13 @@ BattleManager.endTurn = function() {
         //this._turnForced = false;
     }
 };
+
+Window_BattleLog.prototype.waitForNewLine = function() {
+    var baseLine = 0;
+    if (this._baseLineStack.length > 0) {
+        baseLine = this._baseLineStack[this._baseLineStack.length - 1];
+    }
+    if (this._lines.length > baseLine) {
+       //this.wait();
+    }
+};
