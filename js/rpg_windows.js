@@ -4910,7 +4910,7 @@ Window_BattleLog.prototype.waitForNewLine = function() {
         baseLine = this._baseLineStack[this._baseLineStack.length - 1];
     }
     if (this._lines.length > baseLine) {
-        this.wait();
+       this.wait();
     }
 };
 
