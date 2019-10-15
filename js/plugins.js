@@ -46,5 +46,5 @@ var $plugins =
 {"name":"Debug_ReportMemory","status":false,"description":"メモリ使用量を表示します。","parameters":{"Max Pixels In MPix":"100"}},
 {"name":"kaihen","status":true,"description":"","parameters":{}},
 {"name":"SNZ_FirebaseSave","status":false,"description":"FirebaseというWebサービスを使用し、クラウドセーブ（オンラインセーブ）を実現。","parameters":{"savedesc":"jh","usetwitter":"false","usefacebook":"false","starttext":"Press Start","startfont":"{\"fontface\": \"\", \"size\":\"52\", \"bold\":\"false\", \"italic\":\"false\", \"color\": \" rgba(255,255,255,1.0)\"}","startse":"{\"name\":\"Switch1\",\"volume\":\"90\",\"pitch\":\"100\",\"pan\":\"0\"}","firebaseconfig":"{\"apiKey\":\"AIzaSyA7HZZTNNtZgkvoj_TFoQARqtFrMJ_9t_4\",\"authDomain\":\"cardwarld.firebaseapp.com\",\"databaseURL\":\"https://cardwarld.firebaseio.com\",\"projectId\":\"cardwarld\",\"storageBucket\":\"cardwarld.appspot.com\",\"messagingSenderId\":\"755035548027\"}"}},
-{"name":"riwado","status":true,"description":"","parameters":{}}
+{"name":"riwado","status":false,"description":"","parameters":{}}
 ];
