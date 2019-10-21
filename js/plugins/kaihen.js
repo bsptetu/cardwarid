@@ -51,7 +51,6 @@ BattleManager.refreshStatus = function() {
     //this._statusWindow.refresh();
 };
 
-
 Scene_Menu.prototype.start = function() {
     Scene_MenuBase.prototype.start.call(this);
     //this._statusWindow.refresh();
@@ -61,43 +60,11 @@ Scene_Battle.prototype.refreshStatus = function() {
     //this._statusWindow.refresh();
 };
 
-Game_Action.prototype.apply = function(target) {
-    var result = target.result();
-    this.subject().clearResult();
-    result.clear();
-    result.used = this.testApply(target);
-    result.missed = (result.used && Math.random() >= this.itemHit(target));
-    result.evaded = (!result.missed && Math.random() < this.itemEva(target));
-    result.physical = this.isPhysical();
-    result.drain = this.isDrain();
-$gameSwitches.setValue(76,false)
-    if (result.isHit()) {
-        if (this.item().damage.type > 0) {
-            result.critical = (Math.random() < this.itemCri(target));
-            var value = this.makeDamageValue(target, result.critical);
-            this.executeDamage(target, value);
-        }
-       this.item().effects.forEach(function(effect) {
-     if (target.result().hpDamage > 0) {
-     if (this.item().damage.type === 1) {
-     if (!result.missed) {
-       $gameSwitches.setValue(76,true)
-       this.applyItemEffect(target, effect);
-        this.applyItemUserEffect(target);
-    }
-    }
-    }
-    }, this);
-     if (this.item().damage.type === 0) {
-        this.applyItemUserEffect(target);
-        }
-        }
-};
+
 
 Game_Action.prototype.applyCritical = function(damage) {
-    return damage * 2;
+    return damage * 1.5;
 };
-
 
 Game_Action.prototype.executeDamage = function(target, value) {
     var result = target.result();
@@ -116,6 +83,7 @@ if (this.item().damage.type === 1) {
         this.executeMpDamage(target, value);
     }
 };
+
 
 Window_BattleStatus.prototype.initialize = function() {
     var width = this.windowWidth();
