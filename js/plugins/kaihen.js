@@ -159,3 +159,11 @@ Game_Battler.prototype.refresh = function() {
         this.removeState(this.deathStateId());
     }
 };
+
+Sprite_Actor.prototype.retreat = function() {
+    this.startMove(300, 0, 30);
+};
+
+Sprite_Actor.prototype.setActorHome = function(index) {
+    this.setHome(800 + index * 32, 900 + index * 48);
+};
