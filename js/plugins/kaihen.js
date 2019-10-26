@@ -172,35 +172,4 @@ Game_Party.prototype.maxBattleMembers = function() {
     return 8;
 };
 
-Game_Action.prototype.apply = function(target) {
-    var result = target.result();
-    this.subject().clearResult();
-    result.clear();
-    result.used = this.testApply(target);
-    result.missed = (result.used && Math.random() >= this.itemHit(target));
-    result.evaded = (!result.missed && Math.random() < this.itemEva(target));
-    result.physical = this.isPhysical();
-    result.drain = this.isDrain();
-$gameSwitches.setValue(76,false)
-    if (result.isHit()) {
-        if (this.item().damage.type > 0) {
-            result.critical = (Math.random() < this.itemCri(target));
-            var value = this.makeDamageValue(target, result.critical);
-            this.executeDamage(target, value);
-        }
-       this.item().effects.forEach(function(effect) {
-     if (target.result().hpDamage > 0) {
-     if (this.item().damage.type === 1) {
-     if (!result.missed) {
-       $gameSwitches.setValue(76,true)
-       this.applyItemEffect(target, effect);
-        this.applyItemUserEffect(target);
-    }
-    }
-    }
-    }, this);
-     if (this.item().damage.type === 0) {
-        this.applyItemUserEffect(target);
-        }
-        }
-};
+
