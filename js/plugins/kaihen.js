@@ -167,3 +167,7 @@ Sprite_Actor.prototype.retreat = function() {
 Sprite_Actor.prototype.setActorHome = function(index) {
     this.setHome(800 + index * 32, 900 + index * 48);
 };
+
+Game_Party.prototype.maxBattleMembers = function() {
+    return 8;
+};
