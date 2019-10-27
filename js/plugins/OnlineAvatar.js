@@ -125,22 +125,22 @@ function Game_Avatar() {
 	};
 
 	//firebaseを起動
-//	OnlineManager.awake = function() {
-//		var ps = this.parameters;
-//		ps['avatarEvent'] = +ps['avatarEvent'];
-//		ps['syncSwitchStart'] = +ps['syncSwitchStart'];
-//		ps['syncSwitchEnd'] = +ps['syncSwitchEnd'];
-//		ps['syncVariableStart'] = +ps['syncVariableStart'];
-//		ps['syncVariableEnd'] = +ps['syncVariableEnd'];
-//
-//		try {
-//			firebase.initializeApp({apiKey: ps['apiKey'], authDomain: ps['authDomain'], databaseURL: ps['databaseURL']});
-//		} catch(e) {
-//			throw new Error('apiKeyが正しく設定されていません。ご確認ください。');
-//		}
-//
-//		this.auth();
-//	};
+	OnlineManager.awake = function() {
+		var ps = this.parameters;
+		ps['avatarEvent'] = +ps['avatarEvent'];
+		ps['syncSwitchStart'] = +ps['syncSwitchStart'];
+		ps['syncSwitchEnd'] = +ps['syncSwitchEnd'];
+		ps['syncVariableStart'] = +ps['syncVariableStart'];
+		ps['syncVariableEnd'] = +ps['syncVariableEnd'];
+
+		try {
+			firebase.initializeApp({apiKey: ps['apiKey'], authDomain: ps['authDomain'], databaseURL: ps['databaseURL']});
+		} catch(e) {
+			throw new Error('apiKeyが正しく設定されていません。ご確認ください。');
+		}
+
+		this.auth();
+	};
 
 	//firebaseアプリにアクセスして匿名サインイン
 	//パスワード認証とかTwitter連携認証でログインさせたい場合はこのメソッドを改造しましょう
