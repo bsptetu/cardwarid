@@ -558,8 +558,6 @@ FirebaseSave : 上書きセーブを実行します。
     } else {
       if (!FirebaseSave._app) {
         FirebaseSave._app = firebase.initializeApp(param.firebaseconfig)
-var defaultProject = firebase.initializeApp(firebaseConfig);
-console.log(defaultProject.name);  // "[DEFAULT]"
       }
       firebase.auth().onAuthStateChanged(function(user) {
         FirebaseSave._readytopushstart = true;
