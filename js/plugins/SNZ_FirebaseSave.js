@@ -157,7 +157,7 @@ FirebaseSave : 上書きセーブを実行します。
     FirebaseSave._uid = "";
     FirebaseSave._islocalsave = false;
     FirebaseSave._savedata = "";
-    FirebaseSave._app = null;
+    //FirebaseSave._app = null;
 
   //-----------------------------------------------------------------------------
   // パラメーターの受け取り
