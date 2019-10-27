@@ -424,9 +424,7 @@ FirebaseSave : 上書きセーブを実行します。
 
   Window_firebasenewgame.prototype.makeCommandList = function() {
     Window_Command.prototype.makeCommandList.call(this);
-    this.addCommand('Twitterアカウントと連携', 'twitterauth');
     this.addCommand('Googleアカウントと連携', 'googleauth');
-    this.addCommand('Facebookアカウントと連携', 'facebookauth');
     this.addCommand('このブラウザでだけセーブ', 'noauth');
   };
 
