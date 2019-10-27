@@ -556,9 +556,9 @@ FirebaseSave : 上書きセーブを実行します。
     if (this.isPlaytest()) {
       FirebaseSave._readytopushstart = true;
     } else {
-      if (!FirebaseSave._app) {
-        FirebaseSave._app = firebase.initializeApp(param.firebaseconfig);
-      }
+//      if (!FirebaseSave._app) {
+//        FirebaseSave._app = firebase.initializeApp(param.firebaseconfig);
+//      }
       firebase.auth().onAuthStateChanged(function(user) {
         FirebaseSave._readytopushstart = true;
         if (user) {
