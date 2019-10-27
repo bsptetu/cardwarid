@@ -157,7 +157,7 @@ FirebaseSave : 上書きセーブを実行します。
     FirebaseSave._uid = "";
     FirebaseSave._islocalsave = false;
     FirebaseSave._savedata = "";
-    FirebaseSave._app = false;null;
+    FirebaseSave._app = null;
 
   //-----------------------------------------------------------------------------
   // パラメーターの受け取り
@@ -556,9 +556,11 @@ FirebaseSave : 上書きセーブを実行します。
     if (this.isPlaytest()) {
       FirebaseSave._readytopushstart = true;
     } else {
-//      if (!FirebaseSave._app) {
-//        FirebaseSave._app = firebase.initializeApp(param.firebaseconfig)
-//      }
+      if (!FirebaseSave._app) {
+        FirebaseSave._app = firebase.initializeApp(param.firebaseconfig)
+var defaultProject = firebase.initializeApp(firebaseConfig);
+console.log(defaultProject.name);  // "[DEFAULT]"
+      }
       firebase.auth().onAuthStateChanged(function(user) {
         FirebaseSave._readytopushstart = true;
         if (user) {
