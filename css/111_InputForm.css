@@ -33,3 +33,7 @@
     padding: 0.04em 0.25em;
     background: rgba(0,0,0, 0.5);
 }
+
+#gameFrame{
+position:relative;
+z-index:999;

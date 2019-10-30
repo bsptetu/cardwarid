@@ -991,7 +991,7 @@ Sprite_Enemy.prototype.updatePosition = function() {
 };
 
 Sprite_Enemy.prototype.updateStateSprite = function() {
-    this._stateIconSprite.y = -Math.round((this.bitmap.height + 40) * 0.9);
+    this._stateIconSprite.y = -Math.round((this.bitmap.height + 40) * 0.65);
     if (this._stateIconSprite.y < 20 - this.y) {
         this._stateIconSprite.y = 20 - this.y;
     }
@@ -1622,7 +1622,7 @@ Sprite_StateIcon.prototype.initMembers = function() {
     this._animationCount = 0;
     this._animationIndex = 0;
     this.anchor.x = 0.5;
-    this.anchor.y = 0.5;
+    this.anchor.y = 0.7;
 };
 
 Sprite_StateIcon.prototype.loadBitmap = function() {
@@ -1697,7 +1697,7 @@ Sprite_StateOverlay.prototype.initMembers = function() {
     this._animationCount = 0;
     this._pattern = 0;
     this.anchor.x = 0.5;
-    this.anchor.y = 1;
+    this.anchor.y = 1.4;
 };
 
 Sprite_StateOverlay.prototype.loadBitmap = function() {
