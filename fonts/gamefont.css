@@ -10,7 +10,7 @@ video::-webkit-media-controls-start-playback-button {
     width: 5px;
 }
 
-admax-ads{
+#admax{
 height:100px;
 position:relative;
 z-index:999;
