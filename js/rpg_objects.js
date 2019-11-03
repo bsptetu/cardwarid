@@ -2670,7 +2670,7 @@ Game_BattlerBase.prototype.isAlive = function() {
 };
 
 Game_BattlerBase.prototype.isDying = function() {
-    return this.isAlive() && this._hp < this.mhp / 4;
+    return this.isAlive() && this._hp < this.mhp / 2;
 };
 
 Game_BattlerBase.prototype.isRestricted = function() {

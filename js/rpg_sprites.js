@@ -901,7 +901,7 @@ Sprite_Actor.prototype.onMoveEnd = function() {
 };
 
 Sprite_Actor.prototype.damageOffsetX = function() {
-    return -32;
+    return 0;
 };
 
 Sprite_Actor.prototype.damageOffsetY = function() {

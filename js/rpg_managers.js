@@ -2569,6 +2569,7 @@ BattleManager.applySubstitute = function(target) {
     if (this.checkSubstitute(target)) {
         var substitute = target.friendsUnit().substituteBattler();
         if (substitute && target !== substitute) {
+            substitute.startAnimation(129);
             this._logWindow.displaySubstitute(substitute, target);
             return substitute;
         }
