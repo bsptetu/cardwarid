@@ -731,7 +731,7 @@ if (parseInt(parameters['usePixiSpriteToDrawIcon'])) {
             baseTexture = new PIXI.BaseTexture(bitmap._image, PIXI.SCALE_MODES.DEFAULT);
             baseTexture.imageUrl = 'system/IconSet';
             PIXI.utils.BaseTextureCache['system/IconSet'] = baseTexture;
-        }
+       }
 
         var pw = Window_Base._iconWidth;
         var ph = Window_Base._iconHeight;

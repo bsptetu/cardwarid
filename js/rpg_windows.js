@@ -433,7 +433,7 @@ Window_Base.prototype.drawIcon = function(iconIndex, x, y) {
     var ph = Window_Base._iconHeight;
     var sx = iconIndex % 16 * pw;
     var sy = Math.floor(iconIndex / 16) * ph;
-    this.contents.blt(bitmap, sx, sy, pw, ph, x, y);
+    this.contents.blt(bitmap, sx, sy, pw, ph, x, y, 28, 28);this.contents.blt(bitmap, sx, sy, pw, ph, x, y);
 };
 
 Window_Base.prototype.drawFace = function(faceName, faceIndex, x, y, width, height) {
