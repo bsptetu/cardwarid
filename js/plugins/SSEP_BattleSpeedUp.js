@@ -265,7 +265,7 @@ Sprite_Balloon.prototype.waitTime = function() {
 // Alias - startMove
 var _SSEP_Battler_startMove = Sprite_Battler.prototype.startMove;
 Sprite_Battler.prototype.startMove = function(x, y, duration) {
-	if (Input.isPressed('ok') || TouchInput.isPressed()){
+	if ($gameSwitches.value(243) || TouchInput.isPressed()){
   		duration = duration / Sepher.Param.BattleSpeedBoost;
   	} else {
   		duration = duration / Sepher.Param.BattleSpeedDefault;
@@ -276,7 +276,7 @@ Sprite_Battler.prototype.startMove = function(x, y, duration) {
 
 Sprite_Actor.prototype.motionSpeed = function() {
 	var speed = Sepher.Param.Motion;
-	if (Input.isPressed('ok') || TouchInput.isPressed()){
+	if ($gameSwitches.value(243) || TouchInput.isPressed()){
 		speed = speed / Sepher.Param.BattleSpeedBoost;
 	} else {
 		speed = speed / Sepher.Param.BattleSpeedDefault;
@@ -288,7 +288,7 @@ Sprite_Actor.prototype.motionSpeed = function() {
 var _SSEP_Animation_setup = Sprite_Animation.prototype.setup;
 Sprite_Animation.prototype.setup = function(target, animation, mirror, delay) {
 	delay = delay / Sepher.Param.BattleSpeedDefault;
-	if (Input.isPressed('ok') || TouchInput.isPressed()){
+	if ($gameSwitches.value(243) || TouchInput.isPressed()){
 		delay = delay / Sepher.Param.BattleSpeedBoost;
 	} else {
 		delay = delay / Sepher.Param.BattleSpeedDefault;
@@ -301,7 +301,7 @@ Sprite_Animation.prototype.setup = function(target, animation, mirror, delay) {
 var _SSEP_Animation_setupRate = Sprite_Animation.prototype.setupRate;
 Sprite_Animation.prototype.setupRate = function() {
     _SSEP_Animation_setupRate;
-	if (Input.isPressed('ok') || TouchInput.isPressed()){
+	if ($gameSwitches.value(243) || TouchInput.isPressed()){
 		this._rate = this._rate / Sepher.Param.BattleSpeedBoost;
 	} else {
 	    this._rate = this._rate / Sepher.Param.BattleSpeedDefault;
@@ -317,7 +317,7 @@ var _SSEP_Damage_initialize = Sprite_Damage.prototype.initialize;
 Sprite_Damage.prototype.initialize = function() {
 	_SSEP_Damage_initialize.call(this);
     this._duration = Sepher.Param.Damage;
-	if (Input.isPressed('ok') || TouchInput.isPressed()){
+	if ($gameSwitches.value(243) || TouchInput.isPressed()){
 		this._duration = this._duration / Sepher.Param.BattleSpeedBoost;
 	} else {
 		this._duration = this._duration / Sepher.Param.BattleSpeedDefault;
@@ -369,7 +369,7 @@ if (Imported.YEP_BattleEngineCore){
 	//Overwrite actionPerformAction
 	BattleManager.actionPerformAction = function() {
 		wait = Sepher.Param.YEPMotionWait;
-		if (Input.isPressed('ok') || TouchInput.isPressed()){
+		if ($gameSwitches.value(243) || TouchInput.isPressed()){
 			wait = wait / Sepher.Param.BattleSpeedBoost;
 		} else {
 			wait = wait / Sepher.Param.BattleSpeedDefault;
