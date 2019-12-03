@@ -55,15 +55,6 @@
         event.stopPropagation();
     }
 
-    // css追加
-    (function(){
-        var css = document.createElement('link');
-        css.rel = "stylesheet";
-        css.type = 'text/css';
-        css.href = './css/111_InputForm.css';
-        var b_top = document.getElementsByTagName('head')[0];
-        b_top.appendChild(css);
-    })();
     // キー入力不可にする為に
     Input.form_mode = false;
     var _Input_onKeyDown = Input._onKeyDown;
@@ -130,7 +121,7 @@
                 init : function(){
                     this.is_pc = Utils.isNwjs();
                     this.create();
-                    this.input.focus();
+                    //this.input.focus();
                     this.screenAdjust();
                 } ,
                 create : function(){
@@ -142,13 +133,12 @@
                     if (placeholder === '$') {
                         placeholder = $gameVariables.value(variables_id);
                     }
-                    this.input.setAttribute('value', placeholder || '');
-                    document.body.appendChild(this.input);
+
                     // 送信ボタン
                     this.submit = document.createElement('input');
                     this.submit.setAttribute('type', 'submit');
                     this.submit.setAttribute('id', '_111_submit');
-                    this.submit.setAttribute('value', 'サイト表示');
+                    this.submit.setAttribute('value', '決定');
                     document.body.appendChild(this.submit);
                 } ,
                 success : function(){
@@ -201,9 +191,14 @@
             gui.submit.addEventListener("touchstart", stopPropagation); // iOSでclickイベント取れない対策
             gui.submit.addEventListener("click" ,function(){ // 送信ボタンクリック
                 gui.success();
-                window.open("https://bisp.web.fc2.com","_blank")
                 return false;
             });
+            // キャンセルするイベント
+            if (if_switch_id) {
+                var _event = setInterval(function(){
+                        gui.cancel();
+                }, 1);
+            }
 
             // webではウィンドー大きさ変わる度に%求め直すイベントもいる
             //if(! gui.is_pc){
