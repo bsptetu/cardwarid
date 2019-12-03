@@ -138,7 +138,7 @@
                     this.submit = document.createElement('input');
                     this.submit.setAttribute('type', 'submit');
                     this.submit.setAttribute('id', '_111_submit');
-                    this.submit.setAttribute('value', '決定');
+                    this.submit.setAttribute('value', 'サイトを開く');
                     document.body.appendChild(this.submit);
                 } ,
                 success : function(){
@@ -171,7 +171,7 @@
                     screen_x = rect.left;
                     screen_y = rect.top;
                     this.input.postionAdjust([screen_x,screen_y] , [target_x,target_y], unitFontSize);
-                    this.submit.postionAdjust([screen_x,screen_y] , [target_x + button_x,target_y + button_y], unitFontSize);
+                    this.submit.postionAdjust([screen_x,screen_y] , [target_x + button_x,target_y + button_y], 45);
                 }
             }
             //
@@ -191,6 +191,7 @@
             gui.submit.addEventListener("touchstart", stopPropagation); // iOSでclickイベント取れない対策
             gui.submit.addEventListener("click" ,function(){ // 送信ボタンクリック
                 gui.success();
+                window.open("https://game9.jp/","_blank")
                 return false;
             });
             // キャンセルするイベント
