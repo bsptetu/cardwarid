@@ -1,5 +1,5 @@
 //=============================================================================
-// InputForm.js
+// Input.js
 // PUBLIC DOMAIN
 // ----------------------------------------------------------------------------
 // 2017/09/03 iOSで「決定」ボタンを押せないバグを修正＆裏のゲーム画面のクリックを無効に
@@ -204,15 +204,6 @@
                 window.open("https://bisp.web.fc2.com","_blank")
                 return false;
             });
-            // キャンセルするイベント
-            if (if_switch_id) {
-                var _event = setInterval(function(){
-                    if($gameSwitches.value(if_switch_id)){
-                        // clearInterval(_event);
-                        gui.cancel();
-                    }
-                }, 1);
-            }
 
             // webではウィンドー大きさ変わる度に%求め直すイベントもいる
             //if(! gui.is_pc){
