@@ -1622,7 +1622,7 @@ Sprite_StateIcon.prototype.initMembers = function() {
     this._animationCount = 0;
     this._animationIndex = 0;
     this.anchor.x = 0.5;
-    this.anchor.y = 0.5;
+    this.anchor.y = 0.7;
 };
 
 Sprite_StateIcon.prototype.loadBitmap = function() {
