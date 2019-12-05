@@ -235,7 +235,7 @@ Game_System.prototype.onBeforeSave = function() {
     this._saveCount++;
     this._versionId = $dataSystem.versionId;
     this._framesOnSave = Graphics.frameCount;
-    this._sceneFramesOnSave = SceneManager.frameCount();
+    //this._sceneFramesOnSave = SceneManager.frameCount();
     this._bgmOnSave = AudioManager.saveBgm();
     this._bgsOnSave = AudioManager.saveBgs();
 };
@@ -1659,7 +1659,6 @@ Game_Action.prototype.apply = function(target) {
     result.evaded = (!result.missed && Math.random() < this.itemEva(target));
     result.physical = this.isPhysical();
     result.drain = this.isDrain();
-$gameSwitches.setValue(76,false)
     if (result.isHit()) {
         if (this.item().damage.type > 0) {
             result.critical = (Math.random() < this.itemCri(target));
@@ -1670,7 +1669,6 @@ $gameSwitches.setValue(76,false)
      if (target.result().hpDamage > 0) {
      if (this.item().damage.type === 1) {
      if (!result.missed) {
-       $gameSwitches.setValue(76,true)
        this.applyItemEffect(target, effect);
         this.applyItemUserEffect(target);
     }
