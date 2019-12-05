@@ -778,12 +778,9 @@ StorageManager.localFileDirectoryPath = function() {
     var path = require('path');
 
     var base = path.dirname(process.mainModule.filename);
-    if (this.canMakeWwwSaveDirectory()) {
-        return path.join(base, 'save/');
-    } else {
-        return path.join(path.dirname(base), 'save/');
-    }
+    return path.join(base, 'save/');
 };
+
 
 StorageManager.localFilePath = function(savefileId) {
     var name;
