@@ -1,5 +1,5 @@
 //=============================================================================
-// rpg_sprites.js v1.6.1 (community-1.3b)
+// rpg_sprites.js v1.6.2
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -901,7 +901,7 @@ Sprite_Actor.prototype.onMoveEnd = function() {
 };
 
 Sprite_Actor.prototype.damageOffsetX = function() {
-    return -32;
+    return 0;
 };
 
 Sprite_Actor.prototype.damageOffsetY = function() {
@@ -1697,7 +1697,7 @@ Sprite_StateOverlay.prototype.initMembers = function() {
     this._animationCount = 0;
     this._pattern = 0;
     this.anchor.x = 0.5;
-    this.anchor.y = 1;
+    this.anchor.y = 1.4;
 };
 
 Sprite_StateOverlay.prototype.loadBitmap = function() {
@@ -2170,7 +2170,6 @@ Spriteset_Base.prototype.createWebGLToneChanger = function() {
     var width = Graphics.width + margin * 2;
     var height = Graphics.height + margin * 2;
     this._toneFilter = new ToneFilter();
-    this._toneFilter.enabled = false;
     this._baseSprite.filters = [this._toneFilter];
     this._baseSprite.filterArea = new Rectangle(-margin, -margin, width, height);
 };
@@ -2227,13 +2226,8 @@ Spriteset_Base.prototype.updateToneChanger = function() {
 Spriteset_Base.prototype.updateWebGLToneChanger = function() {
     var tone = this._tone;
     this._toneFilter.reset();
-    if (tone[0] || tone[1] || tone[2] || tone[3]) {
-        this._toneFilter.enabled = true;
-        this._toneFilter.adjustTone(tone[0], tone[1], tone[2]);
-        this._toneFilter.adjustSaturation(-tone[3]);
-    } else {
-        this._toneFilter.enabled = false;
-    }
+    this._toneFilter.adjustTone(tone[0], tone[1], tone[2]);
+    this._toneFilter.adjustSaturation(-tone[3]);
 };
 
 Spriteset_Base.prototype.updateCanvasToneChanger = function() {
