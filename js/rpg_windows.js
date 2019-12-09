@@ -5165,10 +5165,8 @@ Window_BattleLog.prototype.displayEvasion = function(target) {
 };
 
 Window_BattleLog.prototype.displayHpDamage = function(target) {
-    $gameSwitches.setValue(76,false)
     if (target.result().hpAffected) {
         if (target.result().hpDamage > 0 && !target.result().drain) {
-       $gameSwitches.setValue(76,true)
             this.push('performDamage', target);
         }
         if (target.result().hpDamage < 0) {
