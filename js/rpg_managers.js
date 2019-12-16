@@ -2404,7 +2404,7 @@ BattleManager.selectPreviousCommand = function() {
 };
 
 BattleManager.refreshStatus = function() {
-    this._statusWindow.refresh();
+    //this._statusWindow.refresh();
 };
 
 BattleManager.startTurn = function() {
@@ -2439,7 +2439,7 @@ BattleManager.processTurn = function() {
         subject.removeCurrentAction();
     } else {
         subject.onAllActionsEnd();
-        this.refreshStatus();
+        //this.refreshStatus();
         this._logWindow.displayAutoAffectedStatus(subject);
         this._logWindow.displayCurrentState(subject);
         this._logWindow.displayRegeneration(subject);
@@ -2453,7 +2453,7 @@ BattleManager.endTurn = function() {
     this._surprise = false;
     this.allBattleMembers().forEach(function(battler) {
         battler.onTurnEnd();
-        this.refreshStatus();
+        //this.refreshStatus();
         this._logWindow.displayAutoAffectedStatus(battler);
         this._logWindow.displayRegeneration(battler);
     }, this);
@@ -2512,7 +2512,7 @@ BattleManager.startAction = function() {
     this._targets = targets;
     subject.useItem(action.item());
     this._action.applyGlobal();
-    this.refreshStatus();
+    //this.refreshStatus();
     this._logWindow.startAction(subject, action, targets);
 };
 
@@ -2541,7 +2541,7 @@ BattleManager.invokeAction = function(subject, target) {
     }
     subject.setLastTarget(target);
     this._logWindow.push('popBaseLine');
-    this.refreshStatus();
+    //this.refreshStatus();
 };
 
 BattleManager.invokeNormalAction = function(subject, target) {

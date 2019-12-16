@@ -2457,11 +2457,11 @@ Scene_Battle.prototype.createScrollTextWindow = function() {
 };
 
 Scene_Battle.prototype.refreshStatus = function() {
-    this._statusWindow.refresh();
+    //this._statusWindow.refresh();
 };
 
 Scene_Battle.prototype.startPartyCommandSelection = function() {
-    this.refreshStatus();
+    //this.refreshStatus();
     this._statusWindow.deselect();
     this._statusWindow.open();
     this._actorCommandWindow.close();

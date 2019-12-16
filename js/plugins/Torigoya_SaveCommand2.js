@@ -203,7 +203,6 @@
             SaveCommand.lastTimestamp = info && info.timestamp ? info.timestamp : 0;
             SaveCommand.lastAccessId = DataManager.lastAccessedSavefileId();
         }
-
         $gameSystem.onBeforeSave();
         // ★★★Added by Sasuke KANNAZUKI 2019.Jan.25
         _.clear();
