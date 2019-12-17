@@ -95,7 +95,7 @@ function OnlineManager() {
 }
 
 function Game_Avatar() {
-	this.initialize.apply(this, arguments);
+	//this.initialize.apply(this, arguments);
 }
 
 (function() {
