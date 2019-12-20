@@ -95,7 +95,7 @@ function OnlineManager() {
 }
 
 function Game_Avatar() {
-	//this.initialize.apply(this, arguments);
+	this.initialize.apply(this, arguments);
 }
 
 (function() {
@@ -145,7 +145,6 @@ function Game_Avatar() {
 	//firebaseアプリにアクセスして匿名サインイン
 	//パスワード認証とかTwitter連携認証でログインさせたい場合はこのメソッドを改造しましょう
 	OnlineManager.auth = function() {
-
 		firebase.auth().signInAnonymously().then(this.start.bind(this)).catch(SceneManager.catchException.bind(SceneManager));
 	};
 
