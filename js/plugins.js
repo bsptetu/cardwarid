@@ -40,5 +40,6 @@ var $plugins =
 {"name":"LightSaveData","status":true,"description":"セーブデータ軽量化プラグイン","parameters":{"現パーティのみ保持":"ON","ExceptionActorIds":"15,16,17,18,19,20,21,61,82"}},
 {"name":"Torigoya_SaveCommand2","status":true,"description":"プラグインコマンドからセーブを実行できるようにします。","parameters":{}},
 {"name":"OmitInterpreterSave","status":false,"description":"イベントコマンドのリストをセーブデータに含めません。","parameters":{}},
-{"name":"HyperLink","status":true,"description":"ゲーム中に外部ページへのリンクを貼ります。","parameters":{"description":"twitterへのリンク"}}
+{"name":"HyperLink","status":true,"description":"ゲーム中に外部ページへのリンクを貼ります。","parameters":{"description":"twitterへのリンク"}},
+{"name":"chunkof_AudioAlert","status":true,"description":"WebAudio非対応ブラウザで開かれた場合「警告表示」「音声なしでプレイ続行」を行います。","parameters":{"displayAlert":"true"}}
 ];
