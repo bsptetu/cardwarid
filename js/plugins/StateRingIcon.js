@@ -466,7 +466,9 @@ function Sprite_StateIconChild() {
     Sprite_StateIconChild.prototype.refreshIconTurn = function() {
         var bitmap = this._turnSprite.bitmap;
         bitmap.clear();
+            if (this._turn > 0) {
         bitmap.drawText(this._turn, 0, 0, bitmap.width, bitmap.height, 'center');
+            }
     };
 
     Sprite_StateIconChild.prototype.makeTurnSpriteIfNeed = function() {
