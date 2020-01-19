@@ -41,5 +41,6 @@ var $plugins =
 {"name":"Torigoya_SaveCommand2","status":true,"description":"プラグインコマンドからセーブを実行できるようにします。","parameters":{}},
 {"name":"OmitInterpreterSave","status":false,"description":"イベントコマンドのリストをセーブデータに含めません。","parameters":{}},
 {"name":"HyperLink","status":true,"description":"ゲーム中に外部ページへのリンクを貼ります。","parameters":{"description":"twitterへのリンク"}},
-{"name":"chunkof_AudioAlert","status":true,"description":"WebAudio非対応ブラウザで開かれた場合「警告表示」「音声なしでプレイ続行」を行います。","parameters":{"displayAlert":"true"}}
+{"name":"chunkof_AudioAlert","status":true,"description":"WebAudio非対応ブラウザで開かれた場合「警告表示」「音声なしでプレイ続行」を行います。","parameters":{"displayAlert":"true"}},
+{"name":"ThroughFailedToLoad","status":true,"description":"ロード失敗エラーのすり抜けプラグイン","parameters":{"テストプレー時無効":"true","Web版で無効":"false","無視種別":"3"}}
 ];
