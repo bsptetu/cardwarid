@@ -2812,8 +2812,8 @@ Window_SavefileList.prototype.maxVisibleItems = function() {
 };
 
 Window_SavefileList.prototype.itemHeight = function() {
-    var innerHeight = this.height - this.padding * 2;
-    return Math.floor(innerHeight / this.maxVisibleItems());
+    //var innerHeight = 1;this.height - this.padding * 2;
+    //return Math.floor(innerHeight / this.maxVisibleItems());
 };
 
 Window_SavefileList.prototype.drawItem = function(index) {
@@ -5757,7 +5757,7 @@ Window_TitleCommand.initCommandPosition = function() {
 };
 
 Window_TitleCommand.prototype.windowWidth = function() {
-    return 240;
+    return 340;
 };
 
 Window_TitleCommand.prototype.updatePlacement = function() {
@@ -5768,7 +5768,7 @@ Window_TitleCommand.prototype.updatePlacement = function() {
 Window_TitleCommand.prototype.makeCommandList = function() {
     this.addCommand(TextManager.newGame,   'newGame');
     this.addCommand(TextManager.continue_, 'continue', this.isContinueEnabled());
-    this.addCommand(TextManager.options,   'options');
+//    this.addCommand(TextManager.options,   'options');
 };
 
 Window_TitleCommand.prototype.isContinueEnabled = function() {

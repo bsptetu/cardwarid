@@ -337,7 +337,7 @@ DataManager.loadSavefileImages = function(info) {
 };
 
 DataManager.maxSavefiles = function() {
-    return 20;
+    return 1;
 };
 
 DataManager.saveGame = function(savefileId) {
