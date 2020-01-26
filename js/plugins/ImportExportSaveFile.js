@@ -280,7 +280,7 @@ if (Utils.isMobileDevice()) {
     Kien.IESaveData.parameters = PluginManager.parameters("ImportExportSaveFile");
     Kien.IESaveData.buttonType = parseInt(Kien.IESaveData.parameters['Menu Button Type'], 10);
     Kien.IESaveData.textAreaX = parseInt(Kien.IESaveData.parameters['Text Area X2'], 10);
-    Kien.IESaveData.textAreaY = window.screen.height/2;parseInt(Kien.IESaveData.parameters['Text Area Y2'], 10);
+    Kien.IESaveData.textAreaY = window.screen.height/3;parseInt(Kien.IESaveData.parameters['Text Area Y2'], 10);
     Kien.IESaveData.textAreaWidth = window.innerWidth/2;window.screen.Width;parseInt(Kien.IESaveData.parameters['Text Area Width2'], 10);
     Kien.IESaveData.textAreaHeight = window.screen.height/2;parseInt(Kien.IESaveData.parameters['Text Area Height2'], 10);
     Kien.IESaveData.okButtonX = parseInt(Kien.IESaveData.parameters['OK Button X2'], 10);
@@ -297,7 +297,7 @@ if (Utils.isMobileDevice()) {
     Kien.IESaveData.parameters = PluginManager.parameters("ImportExportSaveFile");
     Kien.IESaveData.buttonType = parseInt(Kien.IESaveData.parameters['Menu Button Type'], 10);
     Kien.IESaveData.textAreaX = parseInt(Kien.IESaveData.parameters['Text Area X'], 10);
-    Kien.IESaveData.textAreaY = window.screen.height/2;parseInt(Kien.IESaveData.parameters['Text Area Y'], 10);
+    Kien.IESaveData.textAreaY = window.screen.height/3;parseInt(Kien.IESaveData.parameters['Text Area Y'], 10);
     Kien.IESaveData.textAreaWidth = window.innerWidth/3;parseInt(Kien.IESaveData.parameters['Text Area Width'], 10);
     Kien.IESaveData.textAreaHeight = window.screen.height/2;parseInt(Kien.IESaveData.parameters['Text Area Height'], 10);
     Kien.IESaveData.okButtonX = parseInt(Kien.IESaveData.parameters['OK Button X'], 10);
@@ -327,18 +327,25 @@ Graphics.initialize = function(width, height, type) {
 }
 
 Graphics.createImportExportElement = function() {
+    var canvas = document.getElementById('GameCanvas');
                     var screen_x , screen_y;
                     var _canvas = document.querySelector('#UpperCanvas');
                     var rect = _canvas.getBoundingClientRect();
                     screen_x = rect.left;
                     screen_y = rect.top;
     this._importExportElement = document.createElement('textarea');
-    this._importExportElement.style.position = 'absolute';
-    this._importExportElement.style.left = screen_x;Kien.IESaveData.textAreaX + 'px';
-    this._importExportElement.style.top = Kien.IESaveData.textAreaY + 'px';
-    this._importExportElement.style.width = Kien.IESaveData.textAreaWidth + 'px';
+    this._importExportElement.style.width = canvas.style.width;
     this._importExportElement.style.height = Kien.IESaveData.textAreaHeight + 'px';
+    this._importExportElement.style.position = 'absolute';
+    this._importExportElement.style.left = '0px';
+    this._importExportElement.style.top = screen_y * Graphics._realScale + "px";//Kien.IESaveData.textAreaY + 'px' -10;
+    this._importExportElement.style.right = '0px';
+    this._importExportElement.style.bottom = '0px';
+    this._importExportElement.style.margin = 'auto';
     this._importExportElement.zIndex = -1;
+        this._importExportElement.style.maxWidth = 'calc(50%)';
+        this._importExportElement.style.maxHeight = 'calc(50%)';
+
     document.body.appendChild(this._importExportElement);
 }
 
@@ -589,13 +596,15 @@ Scene_File.prototype.onExportClicked = function() {
         Graphics._importExportElement.value = DataManager.loadCompressedGamedata(this.savefileId());
         Graphics._importExportElement.setSelectionRange(0, Graphics._importExportElement.textLength);
         Graphics._importExportElement.style.zIndex = 98;
+      Graphics._importExportElement.focus();
+      Graphics._importExportElement.onfocus="this.select();"
         this.okButton.visible = true;
         this.cancelButton.visible = false;
         this.okButton.setClickHandler(this.onExportOkClicked.bind(this));
         this.cancelButton.setClickHandler(null);
         this._helpWindow.setText(Kien.IESaveData.exportHelpText);
         SoundManager.playOk();
-    } else {
+} else {
         SoundManager.playBuzzer();
     }
 }
@@ -605,6 +614,8 @@ Scene_File.prototype.onImportClicked = function() {
     Graphics._importExportElement.value = Kien.IESaveData.importHelpText;
     Graphics._importExportElement.setSelectionRange(0, Graphics._importExportElement.textLength);
     Graphics._importExportElement.style.zIndex = 98;
+      Graphics._importExportElement.focus();
+      Graphics._importExportElement.onfocus="this.select();"
     this.okButton.visible = true;
     this.cancelButton.visible = true;
     this.okButton.setClickHandler(this.onImportOkClicked.bind(this));
@@ -626,6 +637,7 @@ Scene_File.prototype.onImportOkClicked = function() {
     var string = Graphics._importExportElement.value;
     if (DataManager.saveCompressedGamedata(this.savefileId(), string)) {
         SoundManager.playOk();
+        $gameSwitches.setValue(378,true)
     } else {
         SoundManager.playBuzzer();
     }
