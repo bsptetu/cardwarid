@@ -1,0 +1,72 @@
+Game_Action.prototype.itemEffectAddNormalState = function(target, effect) {
+    var chance = effect.value1;
+    if (!this.isCertainHit()) {
+        chance *= target.stateRate(effect.dataId);
+        chance *= this.lukEffectRate(target);
+    }
+    if (Math.random() < chance) {
+        target.addState(effect.dataId);
+        this.makeSuccess(target);
+    }
+};
+
+Game_Action.prototype.itemEffectAddAttackState = function(target, effect) {
+    this.subject().attackStates().forEach(function(stateId) {
+        var chance = effect.value1;
+        chance *= target.stateRate(stateId);
+        chance *= this.subject().attackStatesRate(stateId);
+        chance *= this.lukEffectRate(target);
+        if (Math.random() < chance) {
+            target.addState(stateId);
+            this.makeSuccess(target);
+        }
+    }.bind(this), target);
+};
+
+Window_BattleLog.prototype.displayHpDamage = function(target) {
+    if (target.result().hpAffected) {
+        if (target.result().hpDamage > 0 && !target.result().drain) {
+       $gameSwitches.setValue(76,true)
+            this.push('performDamage', target);
+        }
+        if (target.result().hpDamage < 0) {
+            this.push('performRecovery', target);
+        }
+        this.push('addText', this.makeHpDamageText(target));
+    }
+};
+Game_Action.prototype.apply = function(target) {
+    var result = target.result();
+    this.subject().clearResult();
+    result.clear();
+    result.used = this.testApply(target);
+    result.missed = (result.used && Math.random() >= this.itemHit(target));
+    result.evaded = (!result.missed && Math.random() < this.itemEva(target));
+    result.physical = this.isPhysical();
+    result.drain = this.isDrain();
+    if (result.isHit()) {
+        if (this.item().damage.type > 0) {
+           if ($gameSwitches.value(389)) {
+              result.critical = ($gameVariables.value(4997) < this.itemCri(target));
+              }else{
+              result.critical = (Math.random() < this.itemCri(target));
+              }
+            var value = this.makeDamageValue(target, result.critical);
+            this.executeDamage(target, value);
+        }
+       this.item().effects.forEach(function(effect) {
+     if (target.result().hpDamage > 0) {
+     if (this.item().damage.type === 1) {
+     if (!result.missed) {
+       $gameSwitches.setValue(76,true)
+       this.applyItemEffect(target, effect);
+        this.applyItemUserEffect(target);
+    }
+    }
+    }
+    }, this);
+     if (this.item().damage.type === 0) {
+        this.applyItemUserEffect(target);
+        }
+        }
+};

@@ -1,0 +1,110 @@
+"id"
+"code":112,"
+
+Game_Unit.prototype.randomTarget = function() {
+    ココかえる　var tgrRand = Math.random() * this.tgrSum();
+    var target = null;
+    this.aliveMembers().forEach(function(member) {
+        tgrRand -= member.tgr;
+        if (tgrRand <= 0 && !target) {
+            target = member;
+        }
+    });
+    return target;
+};
+
+
+P_CALL_CE 8 22 1 OFF
+P_CALL_CE 9 23 1 OFF
+P_CALL_CE 10 24 1 OFF
+P_CALL_CE 11 25 1 OFF
+P_CALL_CE 12 26 1 OFF
+P_CALL_CE 13 27 1 OFF
+P_CALL_CE 96 598 1 ON
+startZoom
+startZoom
+
+
+1024
+
+551
+
+42
+
+999
+
+1000
+{"id"
+,99]}
+
+908
+
+parameters":[1836
+
+
+サーバー２ スイッチ7 379
+apikey AIzaSyD16J48gGcdVSxi-6DJQL1WQhdwbZ3uwWU
+authDomain cardwaridid.firebaseapp.com
+database https://cardwaridid.firebaseio.com
+
+サーバー1
+apikey AIzaSyA7HZZTNNtZgkvoj_TFoQARqtFrMJ_9t_4
+authDomain cardwarld.firebaseapp.com
+database https://cardwarld.firebaseio.com
+
+
+	'use strict';
+	OnlineManagersaba.parameters = PluginManager.parameters('OnlineAvatar');
+	OnlineManagersaba.url = 'https://www.gstatic.com/firebasejs/live/3.0/firebase.js';
+	OnlineManagersaba.avatarTemplate = {"id":0,"meta":{},"name":"","note":"","pages":[{"conditions":{"actorId":1,"actorValid":false,"itemId":1,"itemValid":false,"selfSwitchCh":"A","selfSwitchValid":false,"switch1Id":1,"switch1Valid":false,"switch2Id":1,"switch2Valid":false,"variableId":1,"variableValid":false,"variableValue":0},"directionFix":false,"image":{"tileId":0,"characterName":"","direction":2,"pattern":1,"characterIndex":0},"list":null,"moveFrequency":5,"moveRoute":{"list":[{"code":45,"parameters":["this.moveOnlineXy()"],"indent":null},{"code":0,"parameters":[]}],"repeat":true,"skippable":false,"wait":false},"moveSpeed":5,"moveType":3,"priorityType":1,"stepAnime":false,"through":true,"trigger":4,"walkAnime":true}],"x":0,"y":0};
+	OnlineManagersaba.avatarsInThisMap = null;
+	OnlineManagersaba.mapRef = null;
+	OnlineManagersaba.selfRef = null;
+	OnlineManagersaba.switchRef = null;
+	OnlineManagersaba.variableRef = null;
+	OnlineManagersaba.user = null;
+	OnlineManagersaba.syncBusy = false;	//同期接続する瞬間、送信が受信を上書きするのを阻止
+
+	//ネット上からfirebaseファイルを読み込む
+	OnlineManagersaba.initialize = function() {
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src = this.url;
+		script.async = true;
+		script.onload = this.awake.bind(this);
+		script.onerror = function(e) {
+			throw new Error('firebaseの読み込みに失敗しました。F5でやり直してみてください。');
+		};
+		document.body.appendChild(script);
+
+	//firebaseを起動
+	OnlineManagesabarsaba.awake = function() {
+
+		var ps = this.parameters;
+		//ps['avatarEvent'] = +ps['avatarEvent'];
+		//ps['syncSwitchStart'] = +ps['syncSwitchStart'];
+		//ps['syncSwitchEnd'] = +ps['syncSwitchEnd'];
+		ps['syncVariableStart'] = +ps['syncVariableStart'];
+		ps['syncVariableEnd'] = +ps['syncVariableEnd'];
+
+		try {
+			firebase.initializeApp({apiKey: ps['$gameVariables.value(4996)'], authDomain: ps['$gameVariables.value(4997)'], databaseURL: ps['$gameVariables.value(4998)']});
+		} catch(e) {
+			throw new Error('apiKeyが正しく設定されていません。ご確認ください。');
+		}
+
+		this.auth();
+	};
+}
+};
+
+	//firebaseアプリにアクセスして匿名サインイン
+	//パスワード認証とかTwitter連携認証でログインさせたい場合はこのメソッドを改造しましょう
+	OnlineManagersaba.auth = function() {
+		firebase.auth().signInAnonymously().then(this.start.bind(this)).catch(SceneManager.catchException.bind(SceneManager));
+	};
+	//firebaseアプリにアクセスして匿名サインイン
+	//パスワード認証とかTwitter連携認証でログインさせたい場合はこのメソッドを改造しましょう
+	OnlineManagersaba.auth = function() {
+		firebase.auth().signInAnonymously().then(this.start.bind(this)).catch(SceneManager.catchException.bind(SceneManager));
+	};
