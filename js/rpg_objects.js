@@ -1661,7 +1661,11 @@ Game_Action.prototype.apply = function(target) {
     result.drain = this.isDrain();
     if (result.isHit()) {
         if (this.item().damage.type > 0) {
-            result.critical = (Math.random() < this.itemCri(target));
+           if ($gameSwitches.value(389)) {
+              result.critical = ($gameVariables.value(4997) < this.itemCri(target));
+              }else{
+              result.critical = (Math.random() < this.itemCri(target));
+              }
             var value = this.makeDamageValue(target, result.critical);
             this.executeDamage(target, value);
         }
@@ -1897,10 +1901,18 @@ Game_Action.prototype.itemEffectAddAttackState = function(target, effect) {
         chance *= target.stateRate(stateId);
         chance *= this.subject().attackStatesRate(stateId);
         chance *= this.lukEffectRate(target);
-        if (Math.random() < chance) {
-            target.addState(stateId);
-            this.makeSuccess(target);
-        }
+           if ($gameSwitches.value(389)) {
+                      if ($gameVariables.value(4997) < chance) {
+                       target.addState(stateId);
+                       this.makeSuccess(target);
+                       }
+              }else{
+                      if (Math.random() < chance) {
+                       target.addState(stateId);
+                       this.makeSuccess(target);
+                       }
+              }
+
     }.bind(this), target);
 };
 
@@ -1910,10 +1922,18 @@ Game_Action.prototype.itemEffectAddNormalState = function(target, effect) {
         chance *= target.stateRate(effect.dataId);
         chance *= this.lukEffectRate(target);
     }
-    if (Math.random() < chance) {
-        target.addState(effect.dataId);
-        this.makeSuccess(target);
-    }
+           if ($gameSwitches.value(389)) {
+                       if ($gameVariables.value(4997) < chance) {
+                       target.addState(effect.dataId);
+                        this.makeSuccess(target);
+                       }
+              }else{
+                       if (Math.random() < chance) {
+                       target.addState(effect.dataId);
+                        this.makeSuccess(target);
+                       }
+              }
+
 };
 
 Game_Action.prototype.itemEffectRemoveState = function(target, effect) {
