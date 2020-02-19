@@ -172,6 +172,3 @@ Game_Party.prototype.maxBattleMembers = function() {
     return 8;
 };
 
-    BattleManager.processActorAuto = function() {
-        this.actor().makeAutoBattleActions();
-    };
