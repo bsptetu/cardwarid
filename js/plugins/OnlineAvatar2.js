@@ -111,15 +111,15 @@ function Game_Avatar() {
 
 	//ネット上からfirebaseファイルを読み込む
 	OnlineManager2.initialize = function() {
-		var script = document.createElement('script');
-		script.type = 'text/javascript';
-		script.src = this.url;
-		script.async = true;
-		script.onload = this.awake.bind(this);
-		script.onerror = function(e) {
+		var script2 = document.createElement('script2');
+		script2.type = 'text/javascript';
+		script2.src = this.url;
+		script2.async = true;
+		script2.onload = this.awake.bind(this);
+		script2.onerror = function(e) {
 			throw new Error('firebaseの読み込みに失敗しました。F5でやり直してみてください。');
 		};
-		document.body.appendChild(script);
+		document.body.appendChild(script2);
 	};
 
 	//firebaseを起動
@@ -213,9 +213,9 @@ function Game_Avatar() {
 
 	//変数同期
 	var _Game_Variables_setValue = Game_Variables.prototype.setValue;
-	Game_Variables.prototype.setValue = function(variableId, value, byOnline) {
+	Game_Variables.prototype.setValue = function(variableId, value, byOnline2) {
 		_Game_Variables_setValue.call(this, variableId, value);
-		if (!byOnline) OnlineManager2.sendVariable(variableId, this.value(variableId));
+		if (!byOnline2) OnlineManager2.sendVariable(variableId, this.value(variableId));
 	};
 
 	//スイッチ・変数の初期化時に、再同期処理（タイミングはスイッチが代表する）
