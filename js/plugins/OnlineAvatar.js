@@ -124,6 +124,8 @@ function Game_Avatar() {
 
 	//firebaseを起動
 	OnlineManager.awake = function() {
+
+
 		var ps = this.parameters;
 		//ps['avatarEvent'] = +ps['avatarEvent'];
 		//ps['syncSwitchStart'] = +ps['syncSwitchStart'];
@@ -138,7 +140,6 @@ function Game_Avatar() {
 		}
 
 		this.auth();
-
 	};
 
 	//firebaseアプリにアクセスして匿名サインイン
