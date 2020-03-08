@@ -14,12 +14,12 @@
  * @author くらむぼん
  *
  * @param apiKey2
- * @desc FirebaseのapiKey2。各自コピペしてきてね
+ * @desc FirebaseのapiKey。各自コピペしてきてね
  * @default *******************
  * @type variable
  *
  * @param authDomain2
- * @desc FirebaseのauthDomain2。各自コピペしてきてね
+ * @desc FirebaseのauthDomain。各自コピペしてきてね
  * @default **********.firebaseapp.com
  * @type variable
  * 
@@ -28,15 +28,15 @@
  * @default https://**********.firebaseio.com
  * @type variable
  * 
- * @param avatarEvent
+ * @param avatarEvent2
  * @desc アバターにコピーするコモンイベントの番号。0でアバター機能そのものをオフ
  * @default 1
  *
- * @param syncSwitchStart
+ * @param syncSwitchStart2
  * @desc 全プレイヤーでオンライン共有するスイッチの番号の始まり。両方0で共有機能そのものをオフ
  * @default 11
  *
- * @param syncSwitchEnd
+ * @param syncSwitchEnd2
  * @desc 全プレイヤーでオンライン共有するスイッチの番号の終わり。両方0で共有機能そのものをオフ
  * @default 20
  *
@@ -97,9 +97,9 @@ function OnlineManager2() {
 	throw new Error('This is a static class');
 }
 
-//function Game_Avatar() {
-//	this.initialize.apply(this, arguments);
-//}
+function Game_Avatar2() {
+	this.initialize.apply(this, arguments);
+}
 
 (function() {
 	'use strict';
@@ -127,9 +127,9 @@ function OnlineManager2() {
 
 
 		var ps = this.parameters;
-		//ps['avatarEvent'] = +ps['avatarEvent'];
-		//ps['syncSwitchStart'] = +ps['syncSwitchStart'];
-		//ps['syncSwitchEnd'] = +ps['syncSwitchEnd'];
+		//ps['avatarEvent2'] = +ps['avatarEvent2'];
+		//ps['syncSwitchStart2'] = +ps['syncSwitchStart2'];
+		//ps['syncSwitchEnd2'] = +ps['syncSwitchEnd2'];
 		ps['syncVariableStart2'] = +ps['syncVariableStart2'];
 		ps['syncVariableEnd2'] = +ps['syncVariableEnd2'];
 
@@ -203,28 +203,27 @@ function OnlineManager2() {
 
 
 
-	//OnlineManager2を起動
-//	var _SceneManager_initialize = SceneManager.initialize;
-//	SceneManager.initialize = function() {
-//		_SceneManager_initialize.apply(this, arguments);
-//		OnlineManager2.initialize();
-//	};
+	//OnlineManagerを起動
+	var _SceneManager_initialize = SceneManager.initialize;
+	SceneManager.initialize = function() {
+		_SceneManager_initialize.apply(this, arguments);
+		OnlineManager2.initialize();
+	};
 
 
 	//変数同期
-//	var _Game_Variables_setValue = Game_Variables.prototype.setValue;
-//	Game_Variables.prototype.setValue = function(variableId, value, byOnline2) {
-//		_Game_Variables_setValue.call(this, variableId, value);
-//		if (!byOnline2)
-//       OnlineManager2.sendVariable(variableId, this.value(variableId));
-//	};
+	var _Game_Variables_setValue = Game_Variables.prototype.setValue;
+	Game_Variables.prototype.setValue = function(variableId, value, byOnline) {
+		_Game_Variables_setValue.call(this, variableId, value);
+		if (!byOnline) OnlineManager2.sendVariable(variableId, this.value(variableId));
+	};
 
 	//スイッチ・変数の初期化時に、再同期処理（タイミングはスイッチが代表する）
-//	var _Game_Switches_initialize = Game_Switches.prototype.initialize;
-//	Game_Switches.prototype.initialize = function() {
-//		_Game_Switches_initialize.apply(this, arguments);
-//		OnlineManager2.startSync();
-//	};
+	var _Game_Switches_initialize = Game_Switches.prototype.initialize;
+	Game_Switches.prototype.initialize = function() {
+		_Game_Switches_initialize.apply(this, arguments);
+		OnlineManager2.startSync();
+	};
 
 	//オンライン経由でスイッチ・変数が変更された時、デバッグウィンドウ(F9)に反映
 	//やや重い処理だが、F9はスマホやブラウザで実行されることはないためこれで大丈夫

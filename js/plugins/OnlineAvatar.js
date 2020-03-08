@@ -93,6 +93,14 @@
  * このプラグインの利用法に制限はありません。お好きなようにどうぞ。
  */
 
+OnlineManager.goOffline = function () {
+  firebase.database().goOffline();
+};
+
+OnlineManager.goOnline = function () {
+  firebase.database().goOnline();
+};
+
 function OnlineManager() {
 	throw new Error('This is a static class');
 }
@@ -183,6 +191,7 @@ function Game_Avatar() {
 				$gameVariables.setValue(data.key, data.val(), true);
 			});
 		}
+
 	};
 
 
@@ -215,7 +224,8 @@ function Game_Avatar() {
 	var _Game_Variables_setValue = Game_Variables.prototype.setValue;
 	Game_Variables.prototype.setValue = function(variableId, value, byOnline) {
 		_Game_Variables_setValue.call(this, variableId, value);
-		if (!byOnline) OnlineManager.sendVariable(variableId, this.value(variableId));
+		if (!byOnline)
+		OnlineManager.sendVariable(variableId, this.value(variableId));
 	};
 
 	//スイッチ・変数の初期化時に、再同期処理（タイミングはスイッチが代表する）
@@ -232,5 +242,6 @@ function Game_Avatar() {
 		_Window_DebugEdit_update.apply(this, arguments);
 		this.refresh();
 	};
+
 
  })();
