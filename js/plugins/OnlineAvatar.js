@@ -176,7 +176,6 @@ function Game_Avatar() {
 	//スイッチと変数のオンライン同期の開始
 	OnlineManager.startSync = function() {
 		if (!this.user) return;
-
 		if (this.parameters['syncVariableStart'] || this.parameters['syncVariableEnd']) {
 			if (this.variableRef) this.variableRef.off();
 			else this.variableRef = firebase.database().ref('variables');
@@ -217,6 +216,7 @@ function Game_Avatar() {
 	SceneManager.initialize = function() {
 		_SceneManager_initialize.apply(this, arguments);
 		OnlineManager.initialize();
+//		OnlineManager2.initialize();
 	};
 
 
@@ -226,6 +226,7 @@ function Game_Avatar() {
 		_Game_Variables_setValue.call(this, variableId, value);
 		if (!byOnline)
 		OnlineManager.sendVariable(variableId, this.value(variableId));
+//		OnlineManager2.sendVariable(variableId, this.value(variableId));
 	};
 
 	//スイッチ・変数の初期化時に、再同期処理（タイミングはスイッチが代表する）
@@ -233,6 +234,7 @@ function Game_Avatar() {
 	Game_Switches.prototype.initialize = function() {
 		_Game_Switches_initialize.apply(this, arguments);
 		OnlineManager.startSync();
+//                OnlineManager2.startSync();
 	};
 
 	//オンライン経由でスイッチ・変数が変更された時、デバッグウィンドウ(F9)に反映

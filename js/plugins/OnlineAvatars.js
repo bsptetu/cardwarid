@@ -111,7 +111,7 @@ function Game_Avatar() {
 
 (function() {
 	'use strict';
-	OnlineManager.parameters = PluginManager.parameters('OnlineAvatar');
+	OnlineManager.parameters = PluginManager.parameters('OnlineAvatars');
 	OnlineManager.url = 'https://www.gstatic.com/firebasejs/live/3.0/firebase.js';
 	OnlineManager.variableRef = null;
 	OnlineManager.user = null;

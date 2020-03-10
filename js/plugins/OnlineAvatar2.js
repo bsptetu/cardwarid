@@ -124,8 +124,6 @@ function Game_Avatar2() {
 
 	//firebaseを起動
 	OnlineManager2.awake = function() {
-
-
 		var ps = this.parameters;
 		//ps['avatarEvent2'] = +ps['avatarEvent2'];
 		//ps['syncSwitchStart2'] = +ps['syncSwitchStart2'];
@@ -152,7 +150,6 @@ function Game_Avatar2() {
 	//オンライン接続のイベント登録に関する記述(xxxRef.on()とか)が書いてある関数はこのメソッドから呼び出すと良さげ
 	OnlineManager2.start = function(user) {
 		this.user = user;
-
 		//再接続時にonDisconnectを張り直す
 		var connectedRef = firebase.database().ref('.info/connected');
 		connectedRef.on('value', function(data) {
@@ -168,10 +165,9 @@ function Game_Avatar2() {
 	//スイッチと変数のオンライン同期の開始
 	OnlineManager2.startSync = function() {
 		if (!this.user) return;
-
 		if (this.parameters['syncVariableStart2'] || this.parameters['syncVariableEnd2']) {
 			if (this.variableRef) this.variableRef.off();
-			else this.variableRef = firebase.database().ref('variables');
+			else this.variableRef = firebase.database().ref('variables2');
 			OnlineManager2.syncBusy = true;
 			this.variableRef.once('value', function(data) {
 				OnlineManager2.syncBusy = false;
@@ -215,7 +211,8 @@ function Game_Avatar2() {
 	var _Game_Variables_setValue = Game_Variables.prototype.setValue;
 	Game_Variables.prototype.setValue = function(variableId, value, byOnline) {
 		_Game_Variables_setValue.call(this, variableId, value);
-		if (!byOnline) OnlineManager2.sendVariable(variableId, this.value(variableId));
+		if (!byOnline)
+ OnlineManager2.sendVariable(variableId, this.value(variableId));
 	};
 
 	//スイッチ・変数の初期化時に、再同期処理（タイミングはスイッチが代表する）
@@ -227,10 +224,10 @@ function Game_Avatar2() {
 
 	//オンライン経由でスイッチ・変数が変更された時、デバッグウィンドウ(F9)に反映
 	//やや重い処理だが、F9はスマホやブラウザで実行されることはないためこれで大丈夫
-//	var _Window_DebugEdit_update = Window_DebugEdit.prototype.update;
-//	Window_DebugEdit.prototype.update = function() {
-//		_Window_DebugEdit_update.apply(this, arguments);
-//		this.refresh();
-//	};
+	var _Window_DebugEdit_update = Window_DebugEdit.prototype.update;
+	Window_DebugEdit.prototype.update = function() {
+		_Window_DebugEdit_update.apply(this, arguments);
+		this.refresh();
+	};
 
  })();
