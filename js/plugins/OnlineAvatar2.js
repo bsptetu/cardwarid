@@ -132,6 +132,7 @@ function Game_Avatar2() {
 		ps['syncVariableEnd2'] = +ps['syncVariableEnd2'];
 
 		try {
+
 			firebase.initializeApp({apiKey: ps['apiKey2'], authDomain: ps['authDomain2'], databaseURL: ps['databaseURL2']});
 		} catch(e) {
 			throw new Error('apiKeyが正しく設定されていません。ご確認ください。');
@@ -151,6 +152,9 @@ function Game_Avatar2() {
 	OnlineManager2.start = function(user) {
 		this.user = user;
 		//再接続時にonDisconnectを張り直す
+//app2 = firebase.initializeApp({
+//  databaseURL: "https://cardward1-bb5f9.firebaseio.com"
+//}, 'app2');
 		var connectedRef = firebase.database().ref('.info/connected');
 		connectedRef.on('value', function(data) {
 			if (data.val() && OnlineManager2.selfRef) OnlineManager2.selfRef.onDisconnect().remove();
@@ -164,6 +168,9 @@ function Game_Avatar2() {
 
 	//スイッチと変数のオンライン同期の開始
 	OnlineManager2.startSync = function() {
+//app2 = firebase.initializeApp({
+//  databaseURL: "https://cardward1-bb5f9.firebaseio.com"
+//}, 'app2');
 		if (!this.user) return;
 		if (this.parameters['syncVariableStart2'] || this.parameters['syncVariableEnd2']) {
 			if (this.variableRef) this.variableRef.off();
