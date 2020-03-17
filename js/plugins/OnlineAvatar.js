@@ -28,6 +28,21 @@
  * @default https://**********.firebaseio.com
  * @type variable
  * 
+ * @param projectId
+ * @desc FirebaseのprojectId。各自コピペしてきてね
+ * @default https://**********.firebaseio.com
+ * @type variable
+ * 
+ * @param storageBucket
+ * @desc FirebaseのstorageBucket。各自コピペしてきてね
+ * @default https://**********.firebaseio.com
+ * @type variable
+ * 
+ * @param messagingSenderId
+ * @desc FirebaseのmessagingSenderId。各自コピペしてきてね
+ * @default https://**********.firebaseio.com
+ * @type variable
+ *  
  * @param avatarEvent
  * @desc アバターにコピーするコモンイベントの番号。0でアバター機能そのものをオフ
  * @default 1
@@ -93,13 +108,6 @@
  * このプラグインの利用法に制限はありません。お好きなようにどうぞ。
  */
 
-OnlineManager.goOffline = function () {
-  firebase.database().goOffline();
-};
-
-OnlineManager.goOnline = function () {
-  firebase.database().goOnline();
-};
 
 function OnlineManager() {
 	throw new Error('This is a static class');
@@ -142,7 +150,7 @@ function Game_Avatar() {
 		ps['syncVariableEnd'] = +ps['syncVariableEnd'];
 
 		try {
-			firebase.initializeApp({apiKey: ps['apiKey'], authDomain: ps['authDomain'], databaseURL: ps['databaseURL']});
+			firebase.initializeApp({apiKey: ps['apiKey'], authDomain: ps['authDomain'], databaseURL: ps['databaseURL'], projectId: ps['projectId'], storageBucket: ps['storageBucket'], messagingSenderId: ps['messagingSenderId']});
 		} catch(e) {
 			throw new Error('apiKeyが正しく設定されていません。ご確認ください。');
 		}
@@ -163,7 +171,7 @@ function Game_Avatar() {
 
 		//再接続時にonDisconnectを張り直す
 		var connectedRef = firebase.database().ref('.info/connected');
-		connectedRef.on('value', function(data) {
+		connectedRef.once('value', function(data) {
 			if (data.val() && OnlineManager.selfRef) OnlineManager.selfRef.onDisconnect().remove();
 		});
 
@@ -177,16 +185,16 @@ function Game_Avatar() {
 	OnlineManager.startSync = function() {
 		if (!this.user) return;
 		if (this.parameters['syncVariableStart'] || this.parameters['syncVariableEnd']) {
-			if (this.variableRef) this.variableRef.off();
-			else this.variableRef = firebase.database().ref('variables');
+			if (this.storageRef) this.storageRef.off();
+			else this.storageRef = firebase.storage().ref('variables');
 			OnlineManager.syncBusy = true;
-			this.variableRef.once('value', function(data) {
+			this.storageRef.once('value', function(data) {
 				OnlineManager.syncBusy = false;
 			});
-			this.variableRef.on('child_added', function(data) {
+			this.storageRef.on('child_added', function(data) {
 				$gameVariables.setValue(data.key, data.val(), true);
 			});
-			this.variableRef.on('child_changed', function(data) {
+			this.storageRef.on('child_changed', function(data) {
 				$gameVariables.setValue(data.key, data.val(), true);
 			});
 		}
@@ -202,10 +210,10 @@ function Game_Avatar() {
 
 	//変数を送信
 	OnlineManager.sendVariable = function(variableId, value) {
-		if (this.variableRef && !this.syncBusy && this.variableInRange(variableId)) {
+		if (this.storageRef && !this.syncBusy && this.variableInRange(variableId)) {
 			var send = {};
 			send[variableId] = value;
-			this.variableRef.update(send);
+			this.storageRef.update(send);
 		}
 	};
 
