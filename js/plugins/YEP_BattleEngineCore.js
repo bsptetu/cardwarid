@@ -3436,22 +3436,14 @@ Game_Interpreter.prototype.setBattleSystem = function(value) {
 //=============================================================================
 
 Game_Action.prototype.speed = function() {
-    var user = this.subject(); var a = user;
-    var maxhp = user.mhp; var mhp = user.mhp; var hp = user.hp;
-    var maxmp = user.mmp; var mmp = user.mmp; var mp = user.mp;
-    var maxtp = user.maxTp(); var mtp = user.maxTp(); var tp = user.tp;
-    var atk = user.atk; var def = user.def; var mat = user.mat;
-    var int = user.mat; var mdf = user.mdf; var res = user.res;
-    var agi = user.agi; var luk = user.luk;
-    var code = Yanfly.Param.BECActionSpeed;
-    try {
-      var speed = eval(code);
-    } catch (e) {
-      var speed = 0;
-      Yanfly.Util.displayError(e, code, 'ACTION SPEED FORMULA ERROR');
+    var agi = this.subject().agi;
+    var speed = agi + Math.randomInt(Math.floor(5 + agi / 4));
+    if (this.item()) {
+        speed += this.item().speed;
     }
-    if (this.item()) speed += this.item().speed;
-    if (this.isAttack()) speed += this.subject().attackSpeed();
+    if (this.isAttack()) {
+        speed += this.subject().attackSpeed();
+    }
     return speed;
 };
 
