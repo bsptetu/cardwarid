@@ -1548,7 +1548,7 @@ Sprite_Damage.prototype.createChildSprite = function() {
     var sprite = new Sprite();
     sprite.bitmap = this._damageBitmap;
     sprite.anchor.x = 0.5;
-    sprite.anchor.y = 1;
+    sprite.anchor.y = 0;1;
     sprite.y = -40;
     sprite.ry = sprite.y;
     this.addChild(sprite);
