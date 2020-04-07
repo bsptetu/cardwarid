@@ -7,6 +7,9 @@ $gameVariables.setValue(3829,value);
 
  })();
 
+Game_Battler.prototype.performMiss = function() {
+    $gameVariables.setValue(3829,0);
+};
 
 Window_BattleLog.prototype.animationBaseDelay = function() {
     return 1;
