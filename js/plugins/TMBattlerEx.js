@@ -1,8 +1,8 @@
-//=============================================================================
-// TMPlugin - �o�g���[�\���g��
-// �o�[�W����: 2.0.0
-// �ŏI�X�V��: 2016/08/12
-// �z�z��    : http://hikimoki.sakura.ne.jp/
+﻿//=============================================================================
+// TMPlugin - バトラー表示拡張
+// バージョン: 2.0.0
+// 最終更新日: 2016/08/12
+// 配布元    : http://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2016 tomoaky
 // Released under the MIT license.
@@ -10,63 +10,63 @@
 //=============================================================================
 
 /*:
- * @plugindesc �G�l�~�[�ɉ��ߊ��⑧�Â����̕\����ǉ����܂��B
+ * @plugindesc エネミーに遠近感や息づかいの表現を追加します。
  *
  * @author tomoaky (http://hikimoki.sakura.ne.jp/)
  *
  * @param baseY
- * @desc �g�嗦�����{�ɂȂ�x���W�B
- * �����l: 400
+ * @desc 拡大率が等倍になるＹ座標。
+ * 初期値: 400
  * @default 400
  *
  * @param breathH
- * @desc ���Â����̑傫���B
- * �����l: 0.05
+ * @desc 息づかいの大きさ。
+ * 初期値: 0.05
  * @default 0.05
  *
  * @param mirrorRate
- * @desc ���E���]�̊m���B
- * �����l: 0.4�i 0 �` 1 �j
+ * @desc 左右反転の確率。
+ * 初期値: 0.4（ 0 ～ 1 ）
  * @default 0.4
  *
  * @param breathStop
- * @desc �s���s�\���ɑ��Â������~�߂�B
- * �����l: 1�i 0 �Ŗ��� / 1 �ŗL�� �j
+ * @desc 行動不能時に息づかいを止める。
+ * 初期値: 1（ 0 で無効 / 1 で有効 ）
  * @default 1
  *
  * @param shakeEffect
- * @desc �_�ŃG�t�F�N�g��h��G�t�F�N�g�ɍ����ւ���B
- * �����l: 1�i 0 �Ŗ��� / 1 �ŗL�� �j
+ * @desc 点滅エフェクトを揺れエフェクトに差し替える。
+ * 初期値: 1（ 0 で無効 / 1 で有効 ）
  * @default 1
  *
  * @help
- * �g����:
+ * 使い方:
  *
- *   ���̃v���O�C���𓱓�����ƁA�G�L�����̕\���Ɉȉ��̉��o���ǉ�����܂��B
- *     �E��ʂ̏�̕��ɏo������G���������\�������i���ߊ��j
- *     �E�������Ɗg��k�����J��Ԃ��i���Â����j
- *     �E�����_���ɍ��E�����]����
+ *   このプラグインを導入すると、敵キャラの表示に以下の演出が追加されます。
+ *     ・画面の上の方に出現する敵が小さく表示される（遠近感）
+ *     ・ゆっくりと拡大縮小を繰り返す（息づかい）
+ *     ・ランダムに左右が反転する
  *
- *   �T�C�h�r���[�ł͍��E���]�������ɂȂ�܂��B
- *   �G�L�����̃������Ƀ^�O���������ނ��ƂŁA�G�L�������Ƃɉ��o�̋����
- *   �ݒ肷�邱�Ƃ��ł��܂��B
+ *   サイドビューでは左右反転が無効になります。
+ *   敵キャラのメモ欄にタグを書き込むことで、敵キャラごとに演出の強弱を
+ *   設定することができます。
  *
- *   �v���O�C���R�}���h�͂���܂���B
+ *   プラグインコマンドはありません。
  *
- *   ���̃v���O�C���� RPG�c�N�[��MV Version 1.3.0 �œ���m�F�����Ă��܂��B
+ *   このプラグインは RPGツクールMV Version 1.3.0 で動作確認をしています。
  *
  *
- * �������i�G�L�����j�^�O:
+ * メモ欄（敵キャラ）タグ:
  *
  *   <scale:1>
- *     �g�嗦���ʂɐݒ肵�܂��A���̃^�O������G�L�����ɂ͉��ߊ��̕\����
- *     �K�p����܂���B
+ *     拡大率を個別に設定します、このタグがある敵キャラには遠近感の表現が
+ *     適用されません。
  *
  *   <breathH:0.05>
- *     ���Â����̑傫�����ʂɐݒ肵�܂��B
+ *     息づかいの大きさを個別に設定します。
  *
  *   <noMirror>
- *     ���E���]���֎~���܂��B
+ *     左右反転を禁止します。
  */
 
 var Imported = Imported || {};
@@ -92,7 +92,7 @@ TMPlugin.BattlerEx.ShakeEffect = TMPlugin.BattlerEx.Parameters['shakeEffect'] ==
     _Sprite_Enemy_initialize.call(this, battler);
     var r = +(battler.enemy().meta.scale || this.y / (TMPlugin.BattlerEx.BaseY * 2) + 0.5);
     this._baseScale = new Point(r, r);
-    if ($gameSystem.isSideView() && Math.random() < TMPlugin.BattlerEx.MirrorRate &&
+    if (!$gameSystem.isSideView() && Math.random() < TMPlugin.BattlerEx.MirrorRate &&
         !battler.enemy().meta.noMirror) {
       this._baseScale.x = 0 - r;
       this._stateIconSprite.scale.x = -1;
