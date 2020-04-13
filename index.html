@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <style>
+ .admax-ads{
+    position: absolute;
+    margin-top: -150px; /* 中央配置する要素の横幅の半分だけ上にずらす */
+    margin-left: -300px; /* 中央配置する要素の縦幅の半分だけ左にずらす */
+    top: 50%;  /* 要素の上端を中央に */
+    left: 50%;  /* 要素の左端を中央に */
+    margin = 'auto';
+    zIndex = -1;
+  }
+
+    </style>
         <meta charset="UTF-8">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -33,7 +45,8 @@
         <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
 <!-- admax -->
-<script type="text/javascript">(admaxads = window.admaxads || []).push({admax_id: "7cc13220c5dbd1d3911cc3ee964364ad",type: "overlay"});</script>
+<div class="admax-ads" data-admax-id="427524cc48a144e49531c559a8069441" style="display:inline-block;width:300px;height:600px;"></div>
+<script type="text/javascript">(admaxads = window.admaxads || []).push({admax_id: "427524cc48a144e49531c559a8069441",type: "banner"});</script>
 <script type="text/javascript" charset="utf-8" src="https://adm.shinobi.jp/st/t.js" async></script>
 <!-- admax -->
    </body>
