@@ -2,12 +2,13 @@
 <html>
     <head>
     <style>
- .admax-ads{
+ .admax-switch{
     position: absolute;
-    margin-top: -300px; /* 中央配置する要素の横幅の半分だけ上にずらす */
-    margin-left: -150px; /* 中央配置する要素の縦幅の半分だけ左にずらす */
-    top: 50% - 50px;  /* 要素の上端を中央に */
+    top: 50%;  /* 要素の上端を中央に */
     left: 50%;  /* 要素の左端を中央に */
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin = 'auto';
     zIndex = -1;
   }
 
@@ -44,8 +45,9 @@
         <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
 <!-- admax -->
-<div class="admax-ads" data-admax-id="427524cc48a144e49531c559a8069441" style="display:inline-block;width:300px;height:600px;"></div>
-<script type="text/javascript">(admaxads = window.admaxads || []).push({admax_id: "427524cc48a144e49531c559a8069441",type: "banner"});</script>
+<div class="admax-switch" data-admax-id="0fb5c54a75d86721fd0780e5aa276732" style="display:inline-block;"></div>
+<script type="text/javascript">
+(admaxads = window.admaxads || []).push({admax_id: "0fb5c54a75d86721fd0780e5aa276732",type: "switch"});</script>
 <script type="text/javascript" charset="utf-8" src="https://adm.shinobi.jp/st/t.js" async></script>
 <!-- admax -->
    </body>
