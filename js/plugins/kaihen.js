@@ -174,4 +174,4 @@ Sprite_Actor.prototype.setActorHome = function(index) {
 Game_Party.prototype.maxBattleMembers = function() {
     return 8;
 };
-
+ 
