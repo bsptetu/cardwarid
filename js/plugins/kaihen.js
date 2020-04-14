@@ -174,4 +174,9 @@ Sprite_Actor.prototype.setActorHome = function(index) {
 Game_Party.prototype.maxBattleMembers = function() {
     return 8;
 };
- 
+
+//var _adbanneron_create = adbanneron.prototype.create; 
+//adbanneron.prototype.create = function() {
+//   var div_b = document.getElementsByClassName('widget-banner');
+//   div_b.style.zIndex = "999";
+//};

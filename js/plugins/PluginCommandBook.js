@@ -1335,14 +1335,13 @@
    };
 
     Game_Interpreter.prototype.pluginCommandBook_強制セーブ = function(args) {
-        $gameSystem.onBeforeSave();
-        if (!DataManager.saveGame(DataManager.lastAccessedSavefileId())) {
-            throw new Error('！！！セーブに失敗しました。セーブファイルは消去されています。！！！');
-        }
+    document.getElementById("widget-banner").style.zIndex = -2;//document.getElementsByClassName("widget-banner").style.zIndex = 9999;    
+    document.getElementById("admax-ads").style.zIndex = -2;//document.getElementsByClassName("widget-banner").style.zIndex = 9999;    
     };
 
     Game_Interpreter.prototype.pluginCommandBook_Force_Save = function(args) {
-        this.pluginCommandBook_強制セーブ(args);
+    document.getElementById("widget-banner").style.zIndex = 9999;//document.getElementsByClassName("widget-banner").style.zIndex = 9999;
+    document.getElementById("admax-ads").style.zIndex = 9999;//document.getElementsByClassName("widget-banner").style.zIndex = 9999; 
     };
 
     Game_Interpreter.prototype.pluginCommandBook_指定位置にアニメーション表示 = function(args) {
