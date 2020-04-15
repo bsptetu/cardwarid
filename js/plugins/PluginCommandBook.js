@@ -1341,6 +1341,7 @@
 
     Game_Interpreter.prototype.pluginCommandBook_Force_Save = function(args) {
     document.getElementById("widget-banner").style.zIndex = 9999;//document.getElementsByClassName("widget-banner").style.zIndex = 9999;
+    document.getElementById("widget-banner").style.zIndex = 9999;//document.getElementsByClassName("widget-banner").style.Width = 'calc(50%)';
     document.getElementById("admax-ads").style.zIndex = 9999;//document.getElementsByClassName("widget-banner").style.zIndex = 9999; 
     };
 
