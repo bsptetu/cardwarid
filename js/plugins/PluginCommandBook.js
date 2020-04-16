@@ -1335,15 +1335,20 @@
    };
 
     Game_Interpreter.prototype.pluginCommandBook_強制セーブ = function(args) {
-    document.getElementById("widget-banner").style.zIndex = -2;//document.getElementsByClassName("widget-banner").style.zIndex = 9999;    
-    document.getElementById("admax-ads").style.zIndex = -2;//document.getElementsByClassName("widget-banner").style.zIndex = 9999;    
+         if ($gameSwitches.value(447)) {
+    document.getElementById("widget-banner").style.zIndex = -2;
+        } else {
+    document.getElementById("admax-ads").style.zIndex = -2;
+          }
     };
 
     Game_Interpreter.prototype.pluginCommandBook_Force_Save = function(args) {
-    document.getElementById("widget-banner").style.zIndex = 9999;//document.getElementsByClassName("widget-banner").style.zIndex = 9999;
-    document.getElementById("widget-banner").style.zIndex = 9999;//document.getElementsByClassName("widget-banner").style.Width = 'calc(50%)';
-    document.getElementById("admax-ads").style.zIndex = 9999;//document.getElementsByClassName("widget-banner").style.zIndex = 9999; 
-    };
+         if ($gameSwitches.value(447)) {
+    document.getElementById("widget-banner").style.zIndex = 9999;
+        } else {
+    document.getElementById("admax-ads").style.zIndex = 9999;
+          }
+     };
 
     Game_Interpreter.prototype.pluginCommandBook_指定位置にアニメーション表示 = function(args) {
         var x = parseIntStrict(args[0]);
