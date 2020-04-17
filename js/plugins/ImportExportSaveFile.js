@@ -338,11 +338,11 @@ Graphics.createImportExportElement = function() {
     this._importExportElement.style.height = Kien.IESaveData.textAreaHeight + 'px';
     this._importExportElement.style.position = 'absolute';
     this._importExportElement.style.left = '0px';
-    this._importExportElement.style.top = screen_y * Graphics._realScale + "px";//Kien.IESaveData.textAreaY + 'px' -10;
+    this._importExportElement.style.top = screen_y * Graphics._realScale / 2 + "px";//Kien.IESaveData.textAreaY + 'px' -10;
     this._importExportElement.style.right = '0px';
     this._importExportElement.style.bottom = '0px';
     this._importExportElement.style.margin = 'auto';
-    //this._importExportElement.style.visibility = 'hidden';
+    this._importExportElement.style.visibility = 'hidden';
     this._importExportElement.zIndex = -1;
         this._importExportElement.style.maxWidth = 'calc(50%)';
         this._importExportElement.style.maxHeight = 'calc(50%)';
@@ -597,7 +597,7 @@ Scene_File.prototype.onExportClicked = function() {
         Graphics._importExportElement.value = DataManager.loadCompressedGamedata(this.savefileId());
         Graphics._importExportElement.setSelectionRange(0, Graphics._importExportElement.textLength);
         Graphics._importExportElement.style.zIndex = 98;
-        //Graphics._importExportElement.style.visibility = 'visible';
+        Graphics._importExportElement.style.visibility = 'visible';
       Graphics._importExportElement.focus();
       Graphics._importExportElement.onfocus="this.select();"
         this.okButton.visible = true;
@@ -616,7 +616,7 @@ Scene_File.prototype.onImportClicked = function() {
     Graphics._importExportElement.value = Kien.IESaveData.importHelpText;
     Graphics._importExportElement.setSelectionRange(0, Graphics._importExportElement.textLength);
     Graphics._importExportElement.style.zIndex = 98;
-    //Graphics._importExportElement.style.visibility = 'visible';
+    Graphics._importExportElement.style.visibility = 'visible';
       Graphics._importExportElement.focus();
       Graphics._importExportElement.onfocus="this.select();"
     this.okButton.visible = true;
@@ -629,7 +629,7 @@ Scene_File.prototype.onImportClicked = function() {
 Scene_File.prototype.onExportOkClicked = function() {
     Graphics._importExportElement.value = "";
     Graphics._importExportElement.style.zIndex = -1;
-    //Graphics._importExportElement.style.visibility = 'hidden';
+    Graphics._importExportElement.style.visibility = 'hidden';
     this.okButton.visible = false;
     this.activateListWindow();
     this._helpWindow.setText(this.helpWindowText());
@@ -652,7 +652,7 @@ Scene_File.prototype.onImportOkClicked = function() {
 Scene_File.prototype.onImportCancelClicked = function() {
     Graphics._importExportElement.value = "";
     Graphics._importExportElement.style.zIndex = -1;
-    //Graphics._importExportElement.style.visibility = 'hidden';
+    Graphics._importExportElement.style.visibility = 'hidden';
     this.okButton.visible = false;
     this.cancelButton.visible = false;
     this.activateListWindow();
