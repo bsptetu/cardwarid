@@ -344,8 +344,8 @@ Graphics.createImportExportElement = function() {
     this._importExportElement.style.margin = 'auto';
     this._importExportElement.style.visibility = 'hidden';
     this._importExportElement.zIndex = -1;
-        this._importExportElement.style.maxWidth = 'calc(50%)';
-        this._importExportElement.style.maxHeight = 'calc(50%)';
+        this._importExportElement.style.maxWidth = 'calc(40%)';
+        this._importExportElement.style.maxHeight = 'calc(20%)';
 
     document.body.appendChild(this._importExportElement);
 }
