@@ -7,7 +7,7 @@ var $plugins =
 {"name":"EasingPicture","status":true,"description":"ピクチャーの移動パターンを増やします。","parameters":{}},
 {"name":"kaihen","status":true,"description":"","parameters":{}},
 {"name":"YEP_X_VisualHpGauge","status":true,"description":"v1.07 (Requires YEP_BattleEngineCore.js) Reveal HP Gauges\r\nwhen a battler is selected or takes damage in battle.","parameters":{"---General---":"","Display Actor":"true","Defeat First":"false","Always Visible":"true","---Appearance---":"","Minimum Gauge Width":"70","Gauge Height":"35","Back Color":"19","HP Color 1":"22","HP Color 2":"23","Gauge Duration":"30","Gauge Position":"false","Y Buffer":"-58","Use Thick Gauges":"false","---Text Display---":"","Show HP":"true","Show Value":"true","Show Max":"true"}},
-{"name":"ConfusionExtend","status":true,"description":"混乱ステート拡張プラグイン","parameters":{"味方対象スキルの対象":"ON"}},
+{"name":"ConfusionExtend","status":false,"description":"混乱ステート拡張プラグイン","parameters":{"味方対象スキルの対象":"ON"}},
 {"name":"PictureAnimation","status":true,"description":"ピクチャのアニメーションプラグイン","parameters":{"最初のセルに戻る":"false"}},
 {"name":"PictureCallCommon","status":true,"description":"ピクチャのボタン化プラグイン","parameters":{"透明色を考慮":"true","ピクチャ番号の変数番号":"0","ポインタX座標の変数番号":"0","ポインタY座標の変数番号":"0","タッチ操作抑制":"false","戦闘中常にコモン実行":"true","無効スイッチ":"0"}},
 {"name":"YED_SideviewBattler","status":true,"description":"v1.0.0 様々なタイプのサイドビューバトラーを生成できます。","parameters":{"[Default Setting]":"","Default Frames":"1","Default Speed":"32","Default Frame Width":"96","Default Frame Height":"96","Enable Weapon":"true"}},
