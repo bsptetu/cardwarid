@@ -1337,16 +1337,20 @@
     Game_Interpreter.prototype.pluginCommandBook_強制セーブ = function(args) {
          if ($gameSwitches.value(447)) {
     document.getElementById("widget-banner").style.zIndex = -2;
+    document.getElementById("widget-banner").style.visibility = 'hidden';
         } else {
     document.getElementById("admax-ads").style.zIndex = -2;
+    document.getElementById("admax-ads").style.visibility = 'hidden';
           }
     };
 
     Game_Interpreter.prototype.pluginCommandBook_Force_Save = function(args) {
          if ($gameSwitches.value(447)) {
     document.getElementById("widget-banner").style.zIndex = 9999;
+    document.getElementById("widget-banner").style.visibility = 'visible';
         } else {
-    document.getElementById("admax-ads").style.zIndex = 9999;
+    document.getElementById("admax-ads").style.zIndex:9999;
+    document.getElementById("admax-ads").style.visibility = 'visible';
           }
      };
 
