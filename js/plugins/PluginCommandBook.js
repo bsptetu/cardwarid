@@ -1340,7 +1340,7 @@
     document.getElementById("widget-banner").style.visibility = 'hidden';
         } else {
     document.getElementById("admax-ads").style.zIndex = -2;
-    document.getElementById("admax-ads").style.visibility = 'hidden';
+    //document.getElementById("admax-ads").style.visibility = 'hidden';
           }
     };
 
@@ -1350,7 +1350,7 @@
     document.getElementById("widget-banner").style.visibility = 'visible';
         } else {
     document.getElementById("admax-ads").style.zIndex:9999;
-    document.getElementById("admax-ads").style.visibility = 'visible';
+    //document.getElementById("admax-ads").style.visibility = 'visible';
           }
      };
 
