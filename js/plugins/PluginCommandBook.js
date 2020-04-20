@@ -1625,8 +1625,8 @@
 
     var _Window_NumberInput_start = Window_NumberInput.prototype.start;
     Window_NumberInput.prototype.start = function() {
-        _Window_NumberInput_start.apply(this, arguments);
-        this.updateBackground();
+        //_Window_NumberInput_start.apply(this, arguments);
+        //this.updateBackground();
     };
 
     var _Window_NumberInput_processOk = Window_NumberInput.prototype.processOk;
