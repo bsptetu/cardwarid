@@ -1337,15 +1337,11 @@
    };
 
     Game_Interpreter.prototype.pluginCommandBook_強制セーブ = function(args) {
-    document.getElementById("admax-ads").style.zIndex = -2;
-    document.getElementById("admax-ads").style.visibility = 'hidden';
     document.getElementById("gameFrame").style.zIndex = -2;
     document.getElementById("gameFrame").style.visibility = 'hidden';
     };
 
     Game_Interpreter.prototype.pluginCommandBook_Force_Save = function(args) {
-    document.getElementById("admax-ads").style.zIndex = 9999;
-    document.getElementById("admax-ads").style.visibility = 'visible';
     　　document.getElementById("gameFrame").style.zIndex = 9999;
     　　document.getElementById("gameFrame").style.visibility = 'visible';
      };
