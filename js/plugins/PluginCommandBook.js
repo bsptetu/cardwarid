@@ -1337,7 +1337,7 @@
    };
 
     Game_Interpreter.prototype.pluginCommandBook_強制セーブ = function(args) {
-    document.getElementById("gameFrame").style.zIndex = -2;
+    document.getElementById("gameFrame").style.zIndex = -9999;
     document.getElementById("gameFrame").style.visibility = 'hidden';
     };
 
