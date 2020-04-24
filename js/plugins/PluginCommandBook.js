@@ -1337,23 +1337,17 @@
    };
 
     Game_Interpreter.prototype.pluginCommandBook_強制セーブ = function(args) {
-         if ($gameSwitches.value(447)) {
     document.getElementById("admax-ads").style.zIndex = -2;
     document.getElementById("admax-ads").style.visibility = 'hidden';
-        } else {
-    document.getElementById("admax-ads").style.zIndex = -2;
-    document.getElementById("admax-ads").style.visibility = 'hidden';
-          }
+    document.getElementById("gameFrame").style.zIndex = -2;
+    document.getElementById("gameFrame").style.visibility = 'hidden';
     };
 
     Game_Interpreter.prototype.pluginCommandBook_Force_Save = function(args) {
-         if ($gameSwitches.value(447)) {
     document.getElementById("admax-ads").style.zIndex = 9999;
     document.getElementById("admax-ads").style.visibility = 'visible';
-        } else {
-    　　document.getElementById("admax-ads").style.zIndex = 9999;
-    　　document.getElementById("admax-ads").style.visibility = 'visible';
-          }
+    　　document.getElementById("gameFrame").style.zIndex = 9999;
+    　　document.getElementById("gameFrame").style.visibility = 'visible';
      };
 
     Game_Interpreter.prototype.pluginCommandBook_指定位置にアニメーション表示 = function(args) {
