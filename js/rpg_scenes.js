@@ -527,6 +527,7 @@ Scene_Title.prototype.playTitleMusic = function() {
     AudioManager.playBgm($dataSystem.titleBgm);
     AudioManager.stopBgs();
     AudioManager.stopMe();
+    document.getElementById("gameFrame").style.visibility = 'hidden';
 };
 
 //-----------------------------------------------------------------------------
