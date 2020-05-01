@@ -1834,8 +1834,8 @@ Graphics.initialize = function(width, height, type) {
     this._width = width || 800;
     this._height = height || 600;
     this._rendererType = type || 'auto';
-    this._boxWidth = this._width / 0.7;
-    this._boxHeight = this._height / 0.7;
+    this._boxWidth = this._width;
+    this._boxHeight = this._height;
 
     this._scale = 0.7;1;
     this._realScale = 0.7;1;
