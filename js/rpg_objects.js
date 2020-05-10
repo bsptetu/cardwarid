@@ -1437,7 +1437,7 @@ Game_Action.prototype.isValid = function() {
 
 Game_Action.prototype.speed = function() {
     var agi = this.subject().agi;
-    var speed = agi + Math.randomInt(Math.floor(5 + agi / 4));
+    var speed = agi;
     if (this.item()) {
         speed += this.item().speed;
     }
@@ -4691,13 +4691,14 @@ Game_Unit.prototype.tgrSum = function() {
 };
 
 Game_Unit.prototype.randomTarget = function() {
-    var tgrRand = Math.random() * this.tgrSum();
+    var tgrRand = 0;//Math.random() * this.tgrSum();
     var target = null;
     this.aliveMembers().forEach(function(member) {
-        tgrRand -= member.tgr;
-        if (tgrRand <= 0 && !target) {
+        if (tgrRand < member.tgr) {
             target = member;
-        }
+            tgrRand = member.tgr
+        } 
+
     });
     return target;
 };
