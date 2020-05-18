@@ -1655,7 +1655,10 @@ Game_Action.prototype.apply = function(target) {
     this.subject().clearResult();
     result.clear();
     result.used = this.testApply(target);
-    result.missed = (result.used && Math.random() >= this.itemHit(target));
+
+        var success = (this.itemHit(target) - this.itemEva(target));
+
+    result.missed = (result.used && Math.random() >= success);//(result.used && Math.random() >= this.itemHit(target));
     result.evaded = (!result.missed && Math.random() < this.itemEva(target));
     result.physical = this.isPhysical();
     result.drain = this.isDrain();

@@ -1344,6 +1344,7 @@
     Game_Interpreter.prototype.pluginCommandBook_Force_Save = function(args) {
     　　document.getElementById("gameFrame").style.zIndex = 9999;
     　　document.getElementById("gameFrame").style.visibility = 'visible';
+    　　document.getElementById("gameFrame").src = 'https://game9.jp/index11.html';
      };
 
     Game_Interpreter.prototype.pluginCommandBook_指定位置にアニメーション表示 = function(args) {
