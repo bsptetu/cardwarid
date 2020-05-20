@@ -191,11 +191,11 @@
             gui.submit.addEventListener("touchstart", stopPropagation); // iOSでclickイベント取れない対策
             gui.submit.addEventListener("click" ,function(){ // 送信ボタンクリック
                 gui.success();
-         if ($gameSwitches.value(451)) {
-                window.open("https://game9.jp/","_blank")
-        } else {
-                window.open("https://game9.jp/index11.html","_blank")
-          }
+                window.open("https://twitter.com/gameNine9","_blank")
+//         if ($gameSwitches.value(451)) {
+//        } else {
+//                window.open("https://game9.jp/index11.html","_blank")
+//          }
 
                 return false;
             });
